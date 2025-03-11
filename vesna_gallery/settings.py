@@ -32,9 +32,9 @@ EMAIL_HOST_USER = 'vesna_longton@yahoo.com'
 EMAIL_HOST_PASSWORD = 'ecpmakidvijxmbwy' # App password
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['liveevent-weddingpainter.com', 'liveevent-weddingpainting.com']
+ALLOWED_HOSTS = ['liveevent-weddingpainter.com', 'liveevent-weddingpainting.com', '*']
 
 
 # Application definition
