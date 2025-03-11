@@ -1,169 +1,697 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% load static %}
 
+{% block title %}Contact - Vesna Longton Live Event & Wedding Painter{% endblock title %}
 
-    {% extends "base.html" %}
+{% block meta %}
+<META NAME="description" content="Contact Vesna Longton for live event and wedding painting services. Book your special event today." />
+<META NAME="keywords" content="wedding painting, event painting, event artist, wedding painter, event painter, Vesna Longton, contacts" />
+<META NAME="ROBOTS" CONTENT="INDEX, FOLLOW, ARCHIVE" />
+{% endblock meta %}
 
-    {% load widget_tweaks %}
-
-    {% load static %}
-
-    <!-- More Meta Description-->
-    {% block meta %}
-    <META NAME="description" content="Contact information of Live event and Wedding painting by Vesna Longton." />
-
-    <META NAME="keywords" content="wedding painting,event painting, event artist,wedding painter, event painter,Vesna longton,contacts" />
-    <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW, ARCHIVE" />
-
-    {% endblock meta %}
-
-    {% block extracss %}
-
-<link rel="stylesheet" href="{% static "css/style.css" %}">
-
+{% block extracss %}
+<style>
+    /* Modern Contact Section Styles */
+    .contact-section {
+        padding: 7rem 0 5rem;
+        background-color: var(--bg-light);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .contact-section::before {
+        content: '';
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary-transparent), transparent);
+        top: -200px;
+        left: -200px;
+        z-index: 0;
+    }
+    
+    .contact-section::after {
+        content: '';
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, transparent, var(--primary-transparent));
+        bottom: -150px;
+        right: -150px;
+        z-index: 0;
+    }
+    
+    .section-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .section-title {
+        font-size: var(--font-size-3xl);
+        color: var(--secondary);
+        margin-bottom: 1rem;
+        font-weight: 700;
+    }
+    
+    .section-subtitle {
+        font-size: var(--font-size-lg);
+        color: var(--text-medium);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .contact-wrapper {
+        position: relative;
+        z-index: 1;
+    }
+    
+    /* Form Styles */
+    .form-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        height: 100%;
+        transition: transform 0.3s ease;
+    }
+    
+    .form-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .dark-mode .form-card {
+        background: var(--bg-dark);
+    }
+    
+    .form-header {
+        background: var(--primary);
+        padding: 2rem;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .form-header::before {
+        content: '';
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        top: -75px;
+        right: -75px;
+    }
+    
+    .form-header h2 {
+        color: white;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+        position: relative;
+    }
+    
+    .form-header p {
+        color: rgba(255,255,255,0.9);
+        margin-bottom: 0;
+        font-size: var(--font-size-md);
+        position: relative;
+    }
+    
+    .form-body {
+        padding: 2.5rem;
+    }
+    
+    .form-floating {
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-floating > label {
+        color: var(--text-medium);
+    }
+    
+    .dark-mode .form-floating > label {
+        color: var(--text-light);
+        opacity: 0.7;
+    }
+    
+    .form-control {
+        border: 2px solid #edf2f7;
+        border-radius: 10px;
+        padding: 1rem;
+        height: calc(3.5rem + 2px);
+        font-size: var(--font-size-md);
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 0.25rem rgba(182, 101, 9, 0.1);
+    }
+    
+    .dark-mode .form-control {
+        background-color: var(--bg-medium);
+        border-color: #4a5568;
+        color: var(--text-light);
+    }
+    
+    .form-check {
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-check-input:checked {
+        background-color: var(--primary);
+        border-color: var(--primary);
+    }
+    
+    textarea.form-control {
+        min-height: 150px;
+    }
+    
+    .btn-submit {
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 1rem 2rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+    }
+    
+    .btn-submit::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: all 0.6s ease;
+    }
+    
+    .btn-submit:hover {
+        background: var(--primary-dark);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(182, 101, 9, 0.2);
+    }
+    
+    .btn-submit:hover::before {
+        left: 100%;
+    }
+    
+    .btn-submit i {
+        margin-right: 0.5rem;
+    }
+    
+    /* Contact Info Styles */
+    .info-card {
+        background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        height: 100%;
+        color: white;
+        position: relative;
+    }
+    
+    .info-card::before {
+        content: '';
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 50%;
+        bottom: -50px;
+        left: -50px;
+    }
+    
+    .info-card::after {
+        content: '';
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 50%;
+        top: 50px;
+        right: -30px;
+    }
+    
+    .info-header {
+        padding: 2rem;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        position: relative;
+        z-index: 1;
+    }
+    
+    .info-header h2 {
+        color: white;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+    }
+    
+    .info-header p {
+        color: rgba(255,255,255,0.9);
+        margin-bottom: 0;
+    }
+    
+    .info-body {
+        padding: 2rem;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .contact-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 2rem;
+        position: relative;
+        padding-left: 1rem;
+        transition: transform 0.3s ease;
+    }
+    
+    .contact-item:hover {
+        transform: translateX(5px);
+    }
+    
+    .contact-item::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 2px;
+        background: var(--primary);
+        border-radius: 2px;
+    }
+    
+    .contact-item:last-child {
+        margin-bottom: 0;
+    }
+    
+    .contact-icon {
+        width: 46px;
+        height: 46px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        flex-shrink: 0;
+        color: var(--primary-light);
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+    }
+    
+    .contact-item:hover .contact-icon {
+        background: var(--primary);
+        color: white;
+        transform: rotateY(180deg);
+    }
+    
+    .contact-content h3 {
+        font-size: 1.1rem;
+        color: white;
+        margin-bottom: 0.25rem;
+        font-weight: 600;
+    }
+    
+    .contact-content p {
+        color: rgba(255,255,255,0.7);
+        margin-bottom: 0;
+    }
+    
+    .contact-content a {
+        color: var(--primary-light);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    
+    .contact-content a:hover {
+        color: white;
+    }
+    
+    /* Map Styles */
+    .map-wrapper {
+        margin-top: 2rem;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .map-container {
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        position: relative;
+    }
+    
+    .map-container iframe {
+        width: 100%;
+        height: 300px;
+        border: 0;
+    }
+    
+    .map-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(rgba(182, 101, 9, 0.1), transparent);
+        pointer-events: none;
+    }
+    
+    .map-link {
+        display: block;
+        text-align: center;
+        margin-top: 0.75rem;
+        color: rgba(255,255,255,0.7);
+        font-size: 0.875rem;
+    }
+    
+    .map-link a {
+        color: var(--primary-light);
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    
+    .map-link a:hover {
+        color: white;
+        text-decoration: underline;
+    }
+    
+    /* Social Media Links */
+    .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+        justify-content: center;
+    }
+    
+    .social-icon {
+        width: 40px;
+        height: 40px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .social-icon:hover {
+        background: var(--primary);
+        transform: translateY(-5px);
+    }
+    
+    /* Notification Styles */
+    .notification {
+        padding: 1rem;
+        border-radius: 10px;
+        margin-top: 1.5rem;
+        display: flex;
+        align-items: center;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: slideIn 0.5s forwards;
+    }
+    
+    @keyframes slideIn {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .notification-success {
+        background-color: rgba(72, 187, 120, 0.1);
+        border-left: 4px solid #48bb78;
+        color: #2f855a;
+    }
+    
+    .notification-error {
+        background-color: rgba(245, 101, 101, 0.1);
+        border-left: 4px solid #f56565;
+        color: #c53030;
+    }
+    
+    .dark-mode .notification-success {
+        background-color: rgba(72, 187, 120, 0.2);
+        color: #9ae6b4;
+    }
+    
+    .dark-mode .notification-error {
+        background-color: rgba(245, 101, 101, 0.2);
+        color: #feb2b2;
+    }
+    
+    .notification-icon {
+        margin-right: 1rem;
+        font-size: 1.25rem;
+    }
+    
+    .notification-message {
+        flex-grow: 1;
+    }
+    
+    /* Form Focus Animations */
+    .input-focus-effect {
+        position: relative;
+    }
+    
+    .input-focus-effect::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: var(--primary);
+        transition: width 0.3s ease, left 0.3s ease;
+        z-index: 1;
+    }
+    
+    .input-focus-effect:focus-within::after {
+        width: 100%;
+        left: 0;
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 991.98px) {
+        .info-card {
+            margin-top: 2rem;
+        }
+    }
+    
+    @media (max-width: 767.98px) {
+        .contact-section {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            font-size: var(--font-size-2xl);
+        }
+        
+        .form-body, .info-body {
+            padding: 1.5rem;
+        }
+    }
+</style>
 {% endblock extracss %}
 
-    <title>Contacts - event painter Vesna Longton</title>
-
-    <!--Main Content-->
-
-    {% block content %}
-
-
-        <section class="space">
-            <div class="contacts row ">
-
-                <!--Form Column-->
-                <div class="cont-form col-lg-5 mx-auto">
-                    <div class="card shadow bg-light">
-                        <div class="card-body form-body">
-                            <h3 class="card-title text-center form-title  mb-2">Wedding Inquiry</h3>
-                            <hr>
-                            <!--Contact Form-->
-
-                            <form method="post" class="contact-form mt-3">
-                                    {% csrf_token %}
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
-                                            {{ form.first_name|add_class:"form-control" }}
+{% block content %}
+<section class="contact-section" id="contacts">
+    <div class="container space">
+        <div class="section-header" data-aos="fade-up">
+            <h1 class="section-title">Get In Touch</h1>
+            <p class="section-subtitle">Interested in having your special moment captured? Fill out the form below and I'll get back to you soon.</p>
+        </div>
+        
+        <div class="contact-wrapper">
+            <div class="row g-4">
+                <!-- Contact Form Column -->
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="form-card">
+                        <div class="form-header">
+                            <h2><i class="fas fa-paint-brush"></i> Wedding Inquiry</h2>
+                            <p>I'd love to be part of your special day</p>
+                        </div>
+                        <div class="form-body">
+                            <!-- Contact Form -->
+                            <form method="post" class="contact-form">
+                                {% csrf_token %}
+                                
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <div class="form-floating input-focus-effect">
+                                            {{ form.first_name|add_class:"form-control"|attr:"placeholder:Your first name"|attr:"id:floatingFirstName" }}
+                                            <label for="floatingFirstName">First Name</label>
                                             {% for error in form.first_name.errors %}
-                                                <div class="alert alert-danger">{{ error }}</div>
+                                                <div class="text-danger mt-1 small">{{ error }}</div>
                                             {% endfor %}
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
-                                            {{ form.last_name|add_class:"form-control" }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating input-focus-effect">
+                                            {{ form.last_name|add_class:"form-control"|attr:"placeholder:Your last name"|attr:"id:floatingLastName" }}
+                                            <label for="floatingLastName">Last Name</label>
                                             {% for error in form.last_name.errors %}
-                                                <div class="alert alert-danger">{{ error }}</div>
+                                                <div class="text-danger mt-1 small">{{ error }}</div>
                                             {% endfor %}
                                         </div>
                                     </div>
-
-                                    <div class="form-group">
-                                        <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
-                                        {{ form.email|add_class:"form-control" }}
-                                        {% for error in form.email.errors %}
-                                            <div class="alert alert-danger">{{ error }}</div>
-                                        {% endfor %}
-                                    </div>
-
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="{{ form.wedding_venue.id_for_label }}">{{ form.wedding_venue.label }}</label>
-                                            {{ form.wedding_venue|add_class:"form-control" }}
+                                </div>
+                                
+                                <div class="form-floating input-focus-effect">
+                                    {{ form.email|add_class:"form-control"|attr:"placeholder:Your email"|attr:"id:floatingEmail" }}
+                                    <label for="floatingEmail">Email Address</label>
+                                    {% for error in form.email.errors %}
+                                        <div class="text-danger mt-1 small">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                                
+                                <div class="row g-4 mt-0">
+                                    <div class="col-md-6">
+                                        <div class="form-floating input-focus-effect">
+                                            {{ form.wedding_venue|add_class:"form-control"|attr:"placeholder:Venue name"|attr:"id:floatingVenue" }}
+                                            <label for="floatingVenue">Wedding Venue</label>
                                             {% for error in form.wedding_venue.errors %}
-                                                <div class="alert alert-danger">{{ error }}</div>
+                                                <div class="text-danger mt-1 small">{{ error }}</div>
                                             {% endfor %}
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="{{ form.phone_number.id_for_label }}">{{ form.phone_number.label }}</label>
-                                            {{ form.phone_number|add_class:"form-control" }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating input-focus-effect">
+                                            {{ form.phone_number|add_class:"form-control"|attr:"placeholder:Your phone"|attr:"id:floatingPhone" }}
+                                            <label for="floatingPhone">Phone Number</label>
                                             {% for error in form.phone_number.errors %}
-                                                <div class="alert alert-danger">{{ error }}</div>
+                                                <div class="text-danger mt-1 small">{{ error }}</div>
                                             {% endfor %}
                                         </div>
                                     </div>
-
-
-
-                                    <div class="form-group">
-                                        <label for="{{ form.message.id_for_label }}">{{ form.message.label }}</label>
-                                        {{ form.message|add_class:"form-control" }}
-                                        {% for error in form.message.errors %}
-                                            <div class="alert alert-danger">{{ error }}</div>
-                                        {% endfor %}
-                                    </div>
-
-                                    <button type="submit" class="btn btn-secondary">Send</button>
-                                </form>
+                                </div>
+                                
+                                <div class="form-floating input-focus-effect">
+                                    {{ form.message|add_class:"form-control"|attr:"placeholder:Your message"|attr:"id:floatingMessage"|attr:"style:height: 150px" }}
+                                    <label for="floatingMessage">Your Message</label>
+                                    {% for error in form.message.errors %}
+                                        <div class="text-danger mt-1 small">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                                
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="privacyPolicy" required>
+                                    <label class="form-check-label small" for="privacyPolicy">
+                                        I agree to the processing of my personal data to receive a response to my inquiry.
+                                    </label>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-submit">
+                                    <i class="fas fa-paper-plane"></i> Send Inquiry
+                                </button>
+                                
                                 {% if messages %}
                                     {% for message in messages %}
-                                    <div class="{{ message.tags }}">{{ message }}</div>
+                                        <div class="notification {% if message.tags == 'success' %}notification-success{% else %}notification-error{% endif %}">
+                                            <div class="notification-icon">
+                                                <i class="fas {% if message.tags == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i>
+                                            </div>
+                                            <div class="notification-message">
+                                                {{ message }}
+                                            </div>
+                                        </div>
                                     {% endfor %}
                                 {% endif %}
-                            </div>
-
-                            <!--End of Contact Form-->
-
-
-
+                            </form>
                         </div>
                     </div>
-
-
-                <!--Map Column-->
-                <div class="col-lg-6 mx-auto">
-
-                    <h2 class="text-center mt-2">Get In Touch With Us</h2>
-                    <hr>
-
-
-                    <!-- Get In touch-->
-                    <div class="in-touch row ">
-                        <div class="me location col-md-4  text-center pt-1 mt-1">
-                            <h6>Location</h6>
-                            <p>
-                                25 Hanisch Rd, Attleboro,
-                                <br>
-                                MA 02703, USA
-                            </p>
-                        </div>
-
-                        <div class="me email col-md-3  text-center p-1 mt-1">
-                            <h6>Email Address</h6>
-                            <p><a href="mailto:vesna_longton@yahoo.com">vesna_longton@yahoo.com</a></p>
-
-                        </div>
-
-                        <div class="me phone col-md-3  text-center pt-1 mt-1">
-                            <h6>Phone</h6>
-                            <p><a href="tel:+16176787880">617-678-7880</a></p>
-
-                        </div>
-                    </div>
-
-                    <!-- Map-->
-                    <div class="map">
-                        <iframe width="800rem" height="500rem" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
-                            padding="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=25+Hanisch+Rd,+Attleboro,+MA&amp;aq=0&amp;oq=25&amp;sll=42.036922,-71.683501&amp;sspn=2.011276,4.454956&amp;t=m&amp;ie=UTF8&amp;hq=&amp;hnear=25+Hanisch+Rd,+Attleboro,+Massachusetts+02703&amp;ll=41.933459,-71.311513&amp;spn=0.00787,0.017402&amp;z=14&amp;output=embed">
-                        </iframe>
-
-                        <br>
-
-                        <small>View
-                            <a href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=25+Hanisch+Rd,+Attleboro,+MA&amp;aq=0&amp;oq=25&amp;sll=42.036922,-71.683501&amp;sspn=2.011276,4.454956&amp;t=m&amp;ie=UTF8&amp;hq=&amp;hnear=25+Hanisch+Rd,+Attleboro,+Massachusetts+02703&amp;ll=41.933459,-71.311513&amp;spn=0.00787,0.017402&amp;z=14" target="_blank" style="color:#0d0d0d;text-align:left">Untitled
-
-                            </a> in a larger map
-
-                        </small>
-                    </div>
-
-
                 </div>
-
-
-
+                
+                <!-- Contact Info Column -->
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="info-card">
+                        <div class="info-header">
+                            <h2>Connect With Me</h2>
+                            <p>Here are the ways you can reach out</p>
+                        </div>
+                        <div class="info-body">
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="contact-content">
+                                    <h3>Studio Location</h3>
+                                    <p>25 Hanisch Rd, Attleboro, MA 02703, USA</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="contact-content">
+                                    <h3>Email Address</h3>
+                                    <p><a href="mailto:vesna_longton@yahoo.com">vesna_longton@yahoo.com</a></p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div class="contact-content">
+                                    <h3>Phone Number</h3>
+                                    <p><a href="tel:+16176787880">617-678-7880</a></p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="far fa-clock"></i>
+                                </div>
+                                <div class="contact-content">
+                                    <h3>Working Hours</h3>
+                                    <p>Monday - Friday: 9am - 5pm<br>Weekends by appointment</p>
+                                </div>
+                            </div>
+                            
+                            <div class="social-links">
+                                <a href="#" class="social-icon" aria-label="Facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="social-icon" aria-label="Instagram">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="#" class="social-icon" aria-label="Pinterest">
+                                    <i class="fab fa-pinterest-p"></i>
+                                </a>
+                                <a href="#" class="social-icon" aria-label="LinkedIn">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            </div>
+                            
+                            <div class="map-wrapper">
+                                <div class="map-container">
+                                    <iframe src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=25+Hanisch+Rd,+Attleboro,+MA&amp;aq=0&amp;oq=25&amp;sll=42.036922,-71.683501&amp;sspn=2.011276,4.454956&amp;t=m&amp;ie=UTF8&amp;hq=&amp;hnear=25+Hanisch+Rd,+Attleboro,+Massachusetts+02703&amp;ll=41.933459,-71.311513&amp;spn=0.00787,0.017402&amp;z=14&amp;output=embed" loading="lazy" allowfullscreen></iframe>
+                                    <div class="map-overlay"></div>
+                                </div>
+                                <div class="map-link">
+                                    <a href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=25+Hanisch+Rd,+Attleboro,+MA&amp;aq=0&amp;oq=25&amp;sll=42.036922,-71.683501&amp;sspn=2.011276,4.454956&amp;t=m&amp;ie=UTF8&amp;hq=&amp;hnear=25+Hanisch+Rd,+Attleboro,+Massachusetts+02703&amp;ll=41.933459,-71.311513&amp;spn=0.00787,0.017402&amp;z=14" target="_blank">View in Google Maps</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-    </section>
-
-            {% endblock content %}
+        </div>
+    </div>
+</section>
+{% endblock content %}
