@@ -1,95 +1,644 @@
 {% extends "base.html" %} {% load static %}
 <!-- More Meta Description-->
-    {% block meta %}
-    <META NAME="description" content="Paintings information of each of Live event and Wedding paintings by Vesna Longton." />
-    <META NAME="keywords" content="Vesna Longton,wedding painter,live event painting, live wedding painting, live event artist, event painting,Vesna longton,MA,RI,CT,NH,NJ" />
-    {% endblock meta %}
+{% block meta %}
+<META NAME="description" content="Paintings information of each of Live event and Wedding paintings by Vesna Longton." />
+<META NAME="keywords" content="Vesna Longton,wedding painter,live event painting, live wedding painting, live event artist, event painting,Vesna longton,MA,RI,CT,NH,NJ" />
+{% endblock meta %}
 
-    {% block extracss %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <link rel="stylesheet" href="{% static "css/style.css" %}">
+{% block extracss %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+{% endblock extracss %}
 
-    {% endblock extracss %}
+<!-- Title -->
+<title>{{ image.image_description }} | Vesna Longton</title>
 
-    <!-- Title -->
-    <title>Paintings Details by Vesna Longton</title>
-
-    <!--Main Content-->
-
+<!--Main Content-->
 {% block content %}
 
 <main>
-    <section class="image-details space">
-
-        <div class="image-info row m-1">
-
-            <!-- Carousel -->
-            <div class="carousel col-md-7 my-3">
-
-
-                <div class="carousel__item active">
-                    <img class="px-5 {{image.category}}" src="{{ image.larger_image.url }}" alt="Image Detail" />
-                </div>
-
-                <!-- Navigation buttons -->
-
-                <a href="{% if prev_image_id %}{% url 'image_detail' prev_image_id %}?nav={{ nav_mode }}{% endif %}">
-                    <button class="carousel__button--prev">&#10094;</button>
-                </a>
-
-
-                <a href="{% if next_image_id %}{% url 'image_detail' next_image_id %}?nav={{ nav_mode }}{% endif %}"
-                > <button class="carousel__button--next">&#10095;</button> </a>
-            </div>
-            <!-- End of Carousel -->
-
-            <!-- Image Details -->
-            <div class="text-details me-5 col-md-4 ">
-
-                <h2 class="fs-5 my-5"> {{ image.image_description}} </h2>
-
-                <p class="text-start ms-1 pe-3"> &Lorem ipsum dolxplicabo minima perspiciatis eaque ipsum quo error doloribus assumenda natus deleniti quos quia quas dicta? Reiciendis, provident?</p>
-
-                <div class="back-link">
-                    <a class=" text-secondary text-gray text-decoration-none ms-1 mt-3 pt-3" href="{% url "gallery" %}"> BACK </a>
-                </div>
-
-
-
-
-
-
+    <section class="artwork-showcase space">
+        <div class="container">
+            <div class="artwork-breadcrumb" data-aos="fade-right" data-aos-delay="100">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <!-- <li class="breadcrumb-item"><a href="{% url 'gallery' %}">Home</a></li> -->
+                        <li class="breadcrumb-item"><a href="{% url 'gallery' %}">Gallery</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ image.image_description|truncatechars:30 }}</li>
+                    </ol>
+                </nav>
             </div>
 
+            <div class="row g-5 artwork-container">
+                <!-- Artwork Showcase Area -->
+                <div class="col-lg-8" data-aos="fade-up">
+                    <div class="artwork-showcase-card">
+                        <!-- Main Image Display -->
+                        <div class="artwork-main-image">
+                            <a href="{{ image.larger_image.url }}" data-lightbox="artwork" data-title="{{ image.image_description }}">
+                                <img src="{{ image.larger_image.url }}" alt="{{ image.image_description }}" class="img-fluid rounded shadow {{ image.category }}">
+                                <div class="zoom-overlay">
+                                    <i class="fas fa-search-plus"></i>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Navigation Controls -->
+                        <div class="artwork-navigation">
+                            <div class="nav-buttons">
+                                <a href="{% if prev_image_id %}{% url 'image_detail' prev_image_id %}?nav={{ nav_mode }}{% endif %}" class="nav-btn prev-btn{% if not prev_image_id %} disabled{% endif %}">
+                                    <i class="fas fa-chevron-left"></i>
+                                    <span>Previous</span>
+                                </a>
+                                <a href="{% if next_image_id %}{% url 'image_detail' next_image_id %}?nav={{ nav_mode }}{% endif %}" class="nav-btn next-btn{% if not next_image_id %} disabled{% endif %}">
+                                    <span>Next</span>
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Thumbnails (if available) -->
+                        {% if related_images %}
+                        <div class="artwork-thumbnails">
+                            <div class="thumbnails-container">
+                                {% for related in related_images %}
+                                <a href="{% url 'image_detail' related.id %}?nav={{ nav_mode }}" class="thumbnail{% if related.id == image.id %} active{% endif %}">
+                                    <img src="{{ related.thumbnail.url }}" alt="{{ related.image_description }}" class="img-fluid rounded">
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Artwork Details Area -->
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="artwork-details-card">
+                        <h1 class="artwork-title">{{ image.image_description }}</h1>
+                        
+                        <div class="artwork-meta">
+                            {% if image.date_created %}
+                            <div class="meta-item">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>{{ image.date_created|date:"F Y" }}</span>
+                            </div>
+                            {% endif %}
+                            
+                            {% if image.category %}
+                            <div class="meta-item">
+                                <i class="fas fa-palette"></i>
+                                <span>{{ image.category|title }}</span>
+                            </div>
+                            {% endif %}
+                            
+                            {% if image.location %}
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>{{ image.location }}</span>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="artwork-description">
+                            <p>{{ image.full_description|default:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis libero eget sem finibus sollicitudin. Integer non blandit diam, at finibus odio. Nulla facilisi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae." }}</p>
+                        </div>
+
+                        {% if image.dimensions or image.medium %}
+                        <div class="artwork-specs">
+                            {% if image.dimensions %}
+                            <div class="spec-item">
+                                <span class="spec-label">Dimensions:</span>
+                                <span class="spec-value">{{ image.dimensions }}</span>
+                            </div>
+                            {% endif %}
+                            
+                            {% if image.medium %}
+                            <div class="spec-item">
+                                <span class="spec-label">Medium:</span>
+                                <span class="spec-value">{{ image.medium }}</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+
+                        <div class="artwork-actions">
+                            <a href="{% url 'gallery' %}" class="btn btn-outline-primary">
+                                <i class="fas fa-arrow-left"></i> Back to Gallery
+                            </a>
+                            <a href="{% url 'contact' %}" class="btn btn-primary">
+                                <i class="far fa-envelope"></i> Inquire about this piece
+                            </a>
+                        </div>
+
+                        <div class="artwork-social-share">
+                            <span>Share:</span>
+                            <div class="social-icons">
+                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" rel="noopener noreferrer" class="social-icon facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text=Check out this amazing artwork by Vesna Longton!" target="_blank" rel="noopener noreferrer" class="social-icon twitter">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="https://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri }}&media={{ image.larger_image.url }}&description={{ image.image_description }}" target="_blank" rel="noopener noreferrer" class="social-icon pinterest">
+                                    <i class="fab fa-pinterest-p"></i>
+                                </a>
+                                <a href="mailto:?subject=Check out this artwork by Vesna Longton&body=I thought you might like this: {{ request.build_absolute_uri }}" class="social-icon email">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Related Artworks Section -->
+            <div class="related-artworks" data-aos="fade-up" data-aos-delay="300">
+                <h2>You May Also Like</h2>
+                <div class="row g-4">
+                    {% for i in "123"|make_list %}
+                    <div class="col-md-4 col-sm-6">
+                        <div class="related-artwork-card">
+                            <a href="#" class="related-artwork-link">
+                                <div class="related-artwork-image">
+                                    <img src="/api/placeholder/400/300" alt="Related Artwork" class="img-fluid rounded">
+                                </div>
+                                <div class="related-artwork-details">
+                                    <h3>Beautiful Wedding Ceremony</h3>
+                                    <p>Acrylic on Canvas</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </section>
 </main>
 
+<style>
+    /* Artwork Showcase Styles */
+    .artwork-showcase {
+        padding: 3rem 0;
+    }
+    
+    .artwork-breadcrumb {
+        margin-bottom: 2rem;
+    }
+    
+    .breadcrumb {
+        padding: 0.5rem 1rem;
+        background-color: rgba(var(--bs-light-rgb), 0.5);
+        border-radius: 0.5rem;
+    }
+    
+    .breadcrumb-item a {
+        color: var(--primary-color);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    
+    .breadcrumb-item a:hover {
+        color: var(--secondary-color);
+    }
+    
+    .artwork-container {
+        margin-bottom: 4rem;
+    }
+    
+    .artwork-showcase-card {
+        background-color: #fff;
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .dark-mode .artwork-showcase-card {
+        background-color: #2d3748;
+    }
+    
+    .artwork-main-image {
+        position: relative;
+        overflow: hidden;
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .artwork-main-image img {
+        width: 100%;
+        height: auto;
+        transition: transform 0.5s ease;
+    }
+    
+    .zoom-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        cursor: pointer;
+        color: white;
+        font-size: 2rem;
+    }
+    
+    .artwork-main-image:hover .zoom-overlay {
+        opacity: 1;
+    }
+    
+    .artwork-main-image:hover img {
+        transform: scale(1.03);
+    }
+    
+    .artwork-navigation {
+        display: flex;
+        justify-content: space-between;
+        margin: 1.5rem 0;
+    }
+    
+    .nav-buttons {
+        display: flex;
+        gap: 1rem;
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .nav-btn {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        background-color: #f8f9fa;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        color: var(--text-color);
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    .dark-mode .nav-btn {
+        background-color: #4a5568;
+        color: #f8f9fa;
+    }
+    
+    .nav-btn:hover {
+        background-color: var(--primary-color);
+        color: white;
+        transform: translateY(-2px);
+    }
+    
+    .nav-btn.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+    
+    .prev-btn i {
+        margin-right: 0.5rem;
+    }
+    
+    .next-btn i {
+        margin-left: 0.5rem;
+    }
+    
+    .artwork-thumbnails {
+        margin-top: 1rem;
+    }
+    
+    .thumbnails-container {
+        display: flex;
+        gap: 0.5rem;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+    }
+    
+    .thumbnail {
+        flex: 0 0 auto;
+        width: 80px;
+        height: 80px;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+    }
+    
+    .thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .thumbnail.active {
+        border-color: var(--primary-color);
+    }
+    
+    .thumbnail:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    /* Artwork Details Styles */
+    .artwork-details-card {
+        background-color: #fff;
+        border-radius: 1rem;
+        padding: 2rem;
+        height: 100%;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+    }
+    
+    .dark-mode .artwork-details-card {
+        background-color: #2d3748;
+        color: #f8f9fa;
+    }
+    
+    .artwork-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: var(--secondary-color);
+        position: relative;
+        padding-bottom: 0.5rem;
+    }
+    
+    .dark-mode .artwork-title {
+        color: #f8f9fa;
+    }
+    
+    .artwork-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary-color), transparent);
+    }
+    
+    .artwork-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+    
+    .dark-mode .meta-item {
+        color: #cbd5e0;
+    }
+    
+    .meta-item i {
+        color: var(--primary-color);
+    }
+    
+    .artwork-description {
+        margin-bottom: 1.5rem;
+        line-height: 1.7;
+    }
+    
+    .artwork-specs {
+        background-color: #f8f9fa;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .dark-mode .artwork-specs {
+        background-color: #4a5568;
+    }
+    
+    .spec-item {
+        display: flex;
+        margin-bottom: 0.5rem;
+    }
+    
+    .spec-item:last-child {
+        margin-bottom: 0;
+    }
+    
+    .spec-label {
+        font-weight: 600;
+        min-width: 100px;
+    }
+    
+    .artwork-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .artwork-actions .btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+    }
+    
+    .artwork-actions .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .artwork-social-share {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #e9ecef;
+    }
+    
+    .dark-mode .artwork-social-share {
+        border-top-color: #4a5568;
+    }
+    
+    .social-icons {
+        display: flex;
+        gap: 0.5rem;
+    }
+    
+    .social-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: #f8f9fa;
+        color: #6c757d;
+        transition: all 0.3s ease;
+    }
+    
+    .dark-mode .social-icon {
+        background-color: #4a5568;
+        color: #cbd5e0;
+    }
+    
+    .social-icon:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .social-icon.facebook:hover {
+        background-color: #3b5998;
+        color: white;
+    }
+    
+    .social-icon.twitter:hover {
+        background-color: #1da1f2;
+        color: white;
+    }
+    
+    .social-icon.pinterest:hover {
+        background-color: #bd081c;
+        color: white;
+    }
+    
+    .social-icon.email:hover {
+        background-color: #34495e;
+        color: white;
+    }
+    
+    /* Related Artworks Styles */
+    .related-artworks {
+        margin-top: 3rem;
+        padding-top: 3rem;
+        border-top: 1px solid #e9ecef;
+    }
+    
+    .dark-mode .related-artworks {
+        border-top-color: #4a5568;
+    }
+    
+    .related-artworks h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: var(--secondary-color);
+    }
+    
+    .dark-mode .related-artworks h2 {
+        color: #f8f9fa;
+    }
+    
+    .related-artwork-card {
+        background-color: #fff;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 100%;
+    }
+    
+    .dark-mode .related-artwork-card {
+        background-color: #2d3748;
+    }
+    
+    .related-artwork-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+    
+    .related-artwork-link {
+        text-decoration: none;
+        color: inherit;
+    }
+    
+    .related-artwork-image {
+        height: 200px;
+        overflow: hidden;
+    }
+    
+    .related-artwork-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    
+    .related-artwork-card:hover .related-artwork-image img {
+        transform: scale(1.05);
+    }
+    
+    .related-artwork-details {
+        padding: 1rem;
+    }
+    
+    .related-artwork-details h3 {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+    }
+    
+    .related-artwork-details p {
+        font-size: 0.875rem;
+        color: #6c757d;
+        margin-bottom: 0;
+    }
+    
+    .dark-mode .related-artwork-details p {
+        color: #cbd5e0;
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 992px) {
+        .artwork-actions {
+            flex-direction: column;
+        }
+        
+        .artwork-meta {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .artwork-details-card {
+            margin-top: 2rem;
+        }
+        
+        .related-artwork-image {
+            height: 180px;
+        }
+    }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
 <script>
-
-    // Carousel
-    let currentSlide = 0;
-    const slides = document.querySelectorAll(".carousel__item");
-
-    function showSlide(index) {
-        if (index >= slides.length) index = 0;
-        if (index < 0) index = slides.length - 1;
-
-        slides.forEach((slide) => {
-            slide.classList.remove("active");
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize lightbox
+        lightbox.option({
+            'resizeDuration': 300,
+            'wrapAround': true,
+            'fadeDuration': 300,
+            'showImageNumberLabel': false
         });
-
-        slides[index].classList.add("active");
-        currentSlide = index;
-    }
-
-    function moveSlide(change) {
-        showSlide(currentSlide + change);
-    }
-
-    // Initializing the carousel with the first item active
-    showSlide(currentSlide);
-
+        
+        // Handle keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                const prevLink = document.querySelector('.prev-btn:not(.disabled)');
+                if (prevLink) prevLink.click();
+            } else if (e.key === 'ArrowRight') {
+                const nextLink = document.querySelector('.next-btn:not(.disabled)');
+                if (nextLink) nextLink.click();
+            }
+        });
+    });
 </script>
-
 {% endblock %}
