@@ -1,109 +1,298 @@
 {% extends "base.html" %}
 {% load static %}
 
-<!-- More Meta Description-->
-{% block meta %}
-<META NAME="description"
-    content="Prices of live event and wedding painting. We serves Ma, RI, CT, NH, Providence, Boston and more." />
+{% block title %}Pricing - Live Event & Wedding Painting by Vesna Longton{% endblock title %}
 
-<META NAME="keywords"
-    content="wedding painting prices, wedding painting price, event painting prices, event painting price ,wedding painter, live event painting, live event artist, event painting,Vesna " />
+{% block meta %}
+<META NAME="description" content="Prices of live event and wedding painting by Vesna Longton. Serving MA, RI, CT, NH, Providence, Boston and more." />
+<META NAME="keywords" content="wedding painting prices, wedding painting price, event painting prices, event painting price, wedding painter, live event painting, live event artist, event painting, Vesna Longton" />
 {% endblock meta %}
 
-<!-- Title -->
-<title>Prices of live event and wedding painting</title>
-
-<!-- Extra CSS -->
 {% block extracss %}
-
-<link rel="stylesheet" href="{% static "css/style.css" %}">
+<style>
+    .pricing-section {
+        padding: 5rem 0;
+        background-color: var(--bg-light);
+        position: relative;
+    }
+    
+    .section-title {
+        position: relative;
+        margin-bottom: 3rem;
+        color: var(--secondary);
+        text-align: center;
+    }
+    
+    .section-title::after {
+        content: '';
+        position: absolute;
+        width: 80px;
+        height: 3px;
+        background: var(--primary);
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .dark-mode .section-title {
+        color: var(--text-light);
+    }
+    
+    .discount-section {
+        background-color: var(--primary-transparent);
+        border-radius: var(--radius-md);
+        padding: 1.5rem;
+        margin-bottom: 3rem;
+        text-align: center;
+        border-left: 4px solid var(--primary);
+    }
+    
+    .dark-mode .discount-section {
+        background-color: rgba(224, 143, 60, 0.15);
+    }
+    
+    .discount {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .discount h3 {
+        color: var(--primary);
+        font-weight: 600;
+        margin: 0;
+    }
+    
+    .dark-mode .discount h3 {
+        color: var(--primary-light);
+    }
+    
+    .price-card {
+        background-color: white;
+        border-radius: var(--radius-md);
+        padding: 1.5rem;
+        box-shadow: var(--shadow-md);
+        height: 100%;
+        transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .dark-mode .price-card {
+        background-color: var(--bg-dark);
+    }
+    
+    .price-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 5px;
+        height: 100%;
+        background-color: var(--primary);
+        opacity: 0.7;
+    }
+    
+    .price-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .price-card h3 {
+        color: var(--secondary);
+        font-weight: 700;
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+    }
+    
+    .dark-mode .price-card h3 {
+        color: var(--text-light);
+    }
+    
+    .price-card p {
+        color: var(--text-medium);
+        margin-bottom: 0;
+        font-size: 1rem;
+    }
+    
+    .dark-mode .price-card p {
+        color: var(--text-light);
+        opacity: 0.8;
+    }
+    
+    .note-card {
+        background-color: var(--bg-medium);
+        border-radius: var(--radius-md);
+        padding: 1.5rem;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+        text-align: center;
+        color: var(--text-medium);
+        font-style: italic;
+        position: relative;
+    }
+    
+    .dark-mode .note-card {
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+        opacity: 0.9;
+    }
+    
+    .note-card::before {
+        content: '*';
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 30px;
+        height: 30px;
+        background-color: var(--primary);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-style: normal;
+    }
+    
+    .details-section {
+        background-color: white;
+        border-radius: var(--radius-md);
+        padding: 2.5rem;
+        box-shadow: var(--shadow-md);
+        margin-bottom: 2rem;
+    }
+    
+    .dark-mode .details-section {
+        background-color: var(--bg-dark);
+    }
+    
+    .details-title {
+        position: relative;
+        margin-bottom: 2rem;
+        color: var(--secondary);
+        text-align: center;
+    }
+    
+    .details-title::after {
+        content: '';
+        position: absolute;
+        width: 50px;
+        height: 3px;
+        background: var(--primary);
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .dark-mode .details-title {
+        color: var(--text-light);
+    }
+    
+    .details-text {
+        color: var(--text-medium);
+        font-size: 1.05rem;
+        line-height: 1.7;
+        text-align: center;
+    }
+    
+    .dark-mode .details-text {
+        color: var(--text-light);
+        opacity: 0.9;
+    }
+    
+    .cta-section {
+        text-align: center;
+        margin-top: 3rem;
+    }
+</style>
 {% endblock extracss %}
 
-{% comment %}
-<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" /> {% endcomment %}
-{% comment %} <title>live event-wedding painting</title> {% endcomment %}
-
 {% block content %}
-
-
-<main>
-    <section class="prices container-fluid space">
-        <h2 class="text-center m-3">Prices</h2>
-        <hr>
-
+<section class="pricing-section" id="pricing">
+    <div class="container space">
+        <h1 class="section-title" data-aos="fade-up">Pricing Information</h1>
+        
         {% if active_discounts %}
-        <div class="pt-2 discount-section">
+        <div class="discount-section" data-aos="fade-up" data-aos-delay="100">
             {% for discount in active_discounts %}
-            <div class="discount ">
-                {% if discount.gif_image %}
-                {% endif %}
-                <h3 class="mx-5 px-5">{{ discount.description }}</h3>
+            <div class="discount">
+                <h3>{{ discount.description }}</h3>
             </div>
             {% endfor %}
         </div>
         {% endif %}
-
-        <div class="row  m-2 m-auto">
-            <div class="price-list row m-auto">
-                <div class="first-half col-md-5 m-auto">
-                    <div class="price-item m-2">
-                        <h3>20X16 - $1900</h3>
-                        <p>Vertical, only portrait of two</p>
+        
+        <div class="row g-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="col-lg-6">
+                <div class="row g-4">
+                    <div class="col-md-12">
+                        <div class="price-card">
+                            <h3>20×16 - $1900</h3>
+                            <p>Vertical, only portrait of two</p>
+                        </div>
                     </div>
-                    <div class="price-item m-2">
-                        <h3>18X24 - $2000</h3>
-                        <p>Vertical, only portrait of two</p>
+                    <div class="col-md-12">
+                        <div class="price-card">
+                            <h3>18×24 - $2000</h3>
+                            <p>Vertical, only portrait of two</p>
+                        </div>
                     </div>
-                    <div class="price-item m-2">
-                        <h3>22X28 - $2200</h3>
-                        <p>About 7-8 recognizable people</p>
+                    <div class="col-md-12">
+                        <div class="price-card">
+                            <h3>22×28 - $2200</h3>
+                            <p>About 7-8 recognizable people</p>
+                        </div>
                     </div>
-                    <div class="price-item m-2">
-                        <h3>24X30 - $2300</h3>
-                        <p>About 9-10 recognizable people</p>
-                    </div>
-                </div>
-
-                <div class="second-half col-md-5">
-                    <div class="price-item m-2">
-                        <h3>24X36 - $2400</h3>
-                        <p>About 11- 12 recognizable people</p>
-                    </div>
-                    <div class="price-item m-2">
-                        <h3>30X40 - $3100</h3>
-                        <p>About 13-14 recognizable people</p>
-                    </div>
-                    <div class="price-item m-2">
-                        <h3>30X48 - $3600</h3>
-                        <p>About 15-16 recognizable people, possibly finished in the artist's studio</p>
+                    <div class="col-md-12">
+                        <div class="price-card">
+                            <h3>24×30 - $2300</h3>
+                            <p>About 9-10 recognizable people</p>
+                        </div>
                     </div>
                 </div>
-                <!-- End of Item Prices -->
-                <div class="other-sizes m-auto ">
-                    <p class="m-auto container note">*Other sizes of paintings are negotiable. For locations over an hour from
-                        Attleboro, MA, there is a travel charge.</p>
-                </div>
-
             </div>
-
-            <!-- Ending Piece-->
-            <div class="details pt-2 m-auto pb-2">
-
-                <h2 class="text-center mt-3">Details</h2>
-
-                <p class="container">Paintings are done live at the text-start event as entertainment for the guests. By the end
-                    of the event, the painting will be ready. Paintings can be done in oil, acrylic, or pastel. Acrylic
-                    paintings and pastel can be taken home by the client right after it is finished. Oil paintings need
-                    to stay with the artist for 7-14 days to allow them to dry.</p>
-
-
+            
+            <div class="col-lg-6">
+                <div class="row g-4">
+                    <div class="col-md-12">
+                        <div class="price-card">
+                            <h3>24×36 - $2400</h3>
+                            <p>About 11-12 recognizable people</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="price-card">
+                            <h3>30×40 - $3100</h3>
+                            <p>About 13-14 recognizable people</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="price-card">
+                            <h3>30×48 - $3600</h3>
+                            <p>About 15-16 recognizable people, possibly finished in the artist's studio</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-
         </div>
-
-    </section>
-
-
-</main>
-
+        
+        <div class="note-card" data-aos="fade-up" data-aos-delay="300">
+            <p class="mb-0">Other sizes of paintings are negotiable. For locations over an hour from Attleboro, MA, there is a travel charge.</p>
+        </div>
+        
+        <div class="details-section" data-aos="fade-up" data-aos-delay="400">
+            <h2 class="details-title">Details</h2>
+            <p class="details-text">
+                Paintings are done live at the event as entertainment for the guests. By the end of the event, the painting will be ready. Paintings can be done in oil, acrylic, or pastel. Acrylic paintings and pastel can be taken home by the client right after it is finished. Oil paintings need to stay with the artist for 7-14 days to allow them to dry.
+            </p>
+        </div>
+        
+        <div class="cta-section" data-aos="fade-up" data-aos-delay="500">
+            <a href="{% url 'contact' %}" class="btn btn-primary btn-lg">Request a Quote</a>
+            <a href="{% url 'gallery' %}" class="btn btn-outline-primary btn-lg ms-3">View Gallery</a>
+        </div>
+    </div>
+</section>
 {% endblock %}
