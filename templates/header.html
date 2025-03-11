@@ -1,49 +1,82 @@
 {% load static %}
 
-<header class="header-section">
-    <div class="header-background">
-        <div class="header-overlay"></div>
+<header class="site-header">
+    <!-- Top Info Bar -->
+    <div class="top-bar">
+        <div class="container space">
+            <div class="top-bar-content">
+                <div class="contact-info">
+                    <a href="mailto:vesna_longton@yahoo.com" class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>vesna_longton@yahoo.com</span>
+                    </a>
+                    <a href="tel:6176787880" class="info-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>617-678-7880</span>
+                    </a>
+                    <span class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Attleboro, MA</span>
+                    </span>
+                </div>
+                <div class="social-links">
+                    <a href="#" class="social-link" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Pinterest">
+                        <i class="fab fa-pinterest-p"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="container space position-relative">
-        <div class="row align-items-center">
-            <div class="col-lg-10 mx-auto">
-                <div class="header-content text-center" data-aos="fade-up">
-                    <div class="header-title-wrapper">
-                        <h1 class="main-heading">Live event <span class="highlight">-</span> Wedding painting <span class="highlight">by</span> Vesna Longton</h1>
-                        <div class="heading-accent"></div>
+    
+    <!-- Main Header Banner -->
+    <div class="header-banner">
+        <div class="container space">
+            <div class="header-content" data-aos="fade-up">
+                <h1 class="header-title">Live event - Wedding painting by Vesna Longton</h1>
+                <div class="title-decoration">
+                    <span class="decoration-line"></span>
+                    <i class="fas fa-palette"></i>
+                    <span class="decoration-line"></span>
+                </div>
+                <p class="header-subtitle">Capture the beauty and emotion of your special day with a live painting created during your event</p>
+                <div class="header-buttons">
+                    <a href="#wedding-painting" class="btn btn-primary">Learn More</a>
+                    <a href="#contacts" class="btn btn-outline-primary">Get in Touch</a>
+                </div>
+                
+                <!-- Optional: Feature boxes -->
+                <div class="feature-boxes">
+                    <div class="feature-box" data-aos="fade-up" data-aos-delay="100">
+                        <div class="feature-icon">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h3>Live Painting</h3>
+                            <p>Created during your event</p>
+                        </div>
                     </div>
-                    
-                    <div class="contact-wrapper mt-4 mt-md-5">
-                        <div class="contact-cards">
-                            <a href="mailto:vesna_longton@yahoo.com" class="contact-card" data-aos="fade-up" data-aos-delay="100">
-                                <div class="icon-container">
-                                    <i class="fas fa-envelope"></i>
-                                </div>
-                                <div class="contact-text">
-                                    <span class="contact-label">Email</span>
-                                    <span class="contact-info">vesna_longton@yahoo.com</span>
-                                </div>
-                            </a>
-                            
-                            <a href="tel:6176787880" class="contact-card" data-aos="fade-up" data-aos-delay="200">
-                                <div class="icon-container">
-                                    <i class="fas fa-phone-alt"></i>
-                                </div>
-                                <div class="contact-text">
-                                    <span class="contact-label">Phone</span>
-                                    <span class="contact-info">617-678-7880</span>
-                                </div>
-                            </a>
-                            
-                            <div class="contact-card" data-aos="fade-up" data-aos-delay="300">
-                                <div class="icon-container">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                </div>
-                                <div class="contact-text">
-                                    <span class="contact-label">Location</span>
-                                    <span class="contact-info">Attleboro, MA</span>
-                                </div>
-                            </div>
+                    <div class="feature-box" data-aos="fade-up" data-aos-delay="200">
+                        <div class="feature-icon">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h3>Lasting Memories</h3>
+                            <p>A beautiful keepsake</p>
+                        </div>
+                    </div>
+                    <div class="feature-box" data-aos="fade-up" data-aos-delay="300">
+                        <div class="feature-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h3>Personalized</h3>
+                            <p>Tailored to your event</p>
                         </div>
                     </div>
                 </div>
@@ -53,232 +86,298 @@
 </header>
 
 <style>
-    /* Enhanced Header Styles */
-    .header-section {
+    /* Header Styles */
+    .site-header {
         position: relative;
-        padding: 5rem 0 4rem;
-        overflow: hidden;
-        z-index: 1;
     }
     
-    .header-background {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url("{% static 'img/brush-texture.jpg' %}");
+    /* Top Bar */
+    .top-bar {
+        background-color: var(--secondary);
+        color: white;
+        padding: 0.5rem 0;
+    }
+    
+    .top-bar-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .contact-info {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+    
+    .info-item {
+        display: flex;
+        align-items: center;
+        font-size: var(--font-size-sm);
+        text-decoration: none;
+        color: rgba(255, 255, 255, 0.9);
+        transition: color var(--transition-medium);
+    }
+    
+    .info-item:hover {
+        color: white;
+    }
+    
+    .info-item i {
+        margin-right: 0.5rem;
+        color: var(--primary-light);
+    }
+    
+    .social-links {
+        display: flex;
+        gap: 0.75rem;
+    }
+    
+    .social-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border-radius: var(--radius-full);
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+        font-size: var(--font-size-sm);
+        transition: all var(--transition-medium);
+    }
+    
+    .social-link:hover {
+        background-color: var(--primary);
+        transform: translateY(-3px);
+    }
+    
+    /* Header Banner */
+    .header-banner {
+        background-color: var(--bg-medium);
+        background-image: url('{% static "img/header-bg.jpg" %}');
         background-size: cover;
         background-position: center;
-        opacity: 0.07;
-        z-index: -2;
-    }
-    
-    .header-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-        z-index: -1;
-    }
-    
-    .header-content {
+        background-blend-mode: overlay;
         position: relative;
-        z-index: 2;
-    }
-    
-    .header-title-wrapper {
-        position: relative;
-        display: inline-block;
-        margin-bottom: 1rem;
-    }
-    
-    .main-heading {
-        font-size: 3.2rem;
-        font-weight: 700;
-        line-height: 1.2;
-        color: var(--secondary-color);
-        margin-bottom: 0.5rem;
-        letter-spacing: -0.5px;
-        position: relative;
-    }
-    
-    .highlight {
-        color: var(--primary-color);
-        position: relative;
-    }
-    
-    .heading-accent {
-        position: relative;
-        height: 4px;
-        width: 80px;
-        margin: 1.5rem auto 0;
-        background: var(--primary-color);
-        border-radius: 4px;
+        padding: 6rem 0 4rem;
+        text-align: center;
         overflow: hidden;
     }
     
-    .heading-accent::before {
+    .header-banner::before {
         content: '';
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
-        transform: translateX(-100%);
-        animation: shimmer 3s infinite;
+        background: radial-gradient(circle, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.85) 100%);
+        z-index: 1;
     }
     
-    @keyframes shimmer {
-        100% {
-            transform: translateX(100%);
-        }
+    .dark-mode .header-banner::before {
+        background: radial-gradient(circle, rgba(40,40,40,0.7) 0%, rgba(30,30,30,0.85) 100%);
     }
     
-    .contact-wrapper {
-        margin-top: 2.5rem;
+    .header-content {
+        position: relative;
+        z-index: 2;
+        max-width: 800px;
+        margin: 0 auto;
     }
     
-    .contact-cards {
+    .header-title {
+        font-size: var(--font-size-4xl);
+        font-weight: 800;
+        color: var(--secondary);
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+    }
+    
+    .dark-mode .header-title {
+        color: var(--text-light);
+    }
+    
+    .title-decoration {
         display: flex;
-        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+    
+    .decoration-line {
+        height: 2px;
+        width: 60px;
+        background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    }
+    
+    .title-decoration i {
+        font-size: var(--font-size-lg);
+        color: var(--primary);
+        margin: 0 1rem;
+    }
+    
+    .header-subtitle {
+        font-size: var(--font-size-lg);
+        color: var(--text-medium);
+        margin-bottom: 2rem;
+        font-weight: 300;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .dark-mode .header-subtitle {
+        color: var(--text-light);
+        opacity: 0.8;
+    }
+    
+    .header-buttons {
+        display: flex;
         justify-content: center;
         gap: 1rem;
+        margin-bottom: 3rem;
     }
     
-    .contact-card {
+    /* Feature Boxes */
+    .feature-boxes {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+    
+    .feature-box {
         display: flex;
         align-items: center;
         padding: 1rem 1.5rem;
-        background-color: rgba(255, 255, 255, 0.8);
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        text-decoration: none;
-        color: var(--text-color);
-        width: calc(33.333% - 1rem);
-        min-width: 220px;
-    }
-    
-    .contact-card:hover, .contact-card:focus {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
         background-color: white;
-        border-color: var(--primary-color);
-        color: var(--text-color);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+        transition: all var(--transition-medium);
+        min-width: 210px;
     }
     
-    .icon-container {
+    .dark-mode .feature-box {
+        background-color: var(--bg-dark);
+    }
+    
+    .feature-box:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .feature-icon {
+        width: 50px;
+        height: 50px;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, var(--primary-color), rgba(52, 152, 219, 0.8));
+        background-color: var(--primary-transparent);
+        color: var(--primary);
+        border-radius: var(--radius-full);
         margin-right: 1rem;
-        color: white;
         flex-shrink: 0;
     }
     
-    .contact-text {
-        display: flex;
-        flex-direction: column;
+    .feature-icon i {
+        font-size: var(--font-size-xl);
     }
     
-    .contact-label {
-        font-size: 0.8rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        color: var(--primary-color);
-        margin-bottom: 0.2rem;
-        letter-spacing: 0.5px;
+    .feature-content h3 {
+        font-size: var(--font-size-md);
+        margin-bottom: 0.25rem;
+        color: var(--secondary);
     }
     
-    .contact-info {
-        font-weight: 500;
-        font-size: 0.95rem;
+    .dark-mode .feature-content h3 {
+        color: var(--text-light);
     }
     
-    /* Dark mode adaptations */
-    .dark-mode .header-overlay {
-        background: linear-gradient(135deg, #1a1a1a 0%, #2c3e50 100%);
+    .feature-content p {
+        font-size: var(--font-size-sm);
+        color: var(--text-medium);
+        margin-bottom: 0;
     }
     
-    .dark-mode .main-heading {
-        color: #f8f9fa;
+    .dark-mode .feature-content p {
+        color: var(--text-light);
+        opacity: 0.7;
     }
     
-    .dark-mode .contact-card {
-        background-color: rgba(33, 37, 41, 0.8);
-        border-color: rgba(255, 255, 255, 0.05);
-    }
-    
-    .dark-mode .contact-card:hover, .dark-mode .contact-card:focus {
-        background-color: rgba(52, 58, 64, 0.9);
-        border-color: var(--primary-color);
-    }
-    
-    .dark-mode .contact-info {
-        color: #f8f9fa;
-    }
-    
-    /* Enhanced Responsive Styles */
-    @media (max-width: 991px) {
-        .main-heading {
-            font-size: 2.6rem;
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+        .header-title {
+            font-size: var(--font-size-3xl);
         }
         
-        .contact-card {
-            width: calc(50% - 1rem);
+        .header-subtitle {
+            font-size: var(--font-size-md);
+        }
+        
+        .feature-boxes {
+            flex-direction: column;
+            align-items: center;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .feature-box {
+            width: 100%;
         }
     }
     
     @media (max-width: 768px) {
-        .header-section {
+        .top-bar-content {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .contact-info {
+            justify-content: center;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header-banner {
             padding: 4rem 0 3rem;
         }
         
-        .main-heading {
-            font-size: 2rem;
+        .header-title {
+            font-size: var(--font-size-2xl);
         }
         
-        .contact-cards {
+        .header-buttons {
             flex-direction: column;
-            align-items: center;
-            gap: 0.75rem;
+            max-width: 250px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .contact-info {
+            flex-direction: column;
+            gap: 0.5rem;
         }
         
-        .contact-card {
-            width: 100%;
-            max-width: 400px;
+        .info-item {
+            justify-content: center;
         }
-    }
-    
-    /* Tablet adjustments */
-    @media (min-width: 768px) and (max-width: 991px) {
-        .main-heading {
-            font-size: 2.4rem;
+        
+        .header-banner {
+            padding: 3rem 0 2rem;
         }
-    }
-    
-    /* Animation for the header elements on page load */
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
+        
+        .header-title {
+            font-size: var(--font-size-xl);
         }
-        to {
-            opacity: 1;
-            transform: translateY(0);
+        
+        .decoration-line {
+            width: 40px;
         }
-    }
-    
-    .header-content > * {
-        animation: fadeInUp 0.8s ease-out forwards;
     }
 </style>
