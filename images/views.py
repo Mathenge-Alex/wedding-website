@@ -9,6 +9,9 @@ from django.http import HttpResponse
 from django.utils import timezone
 
 
+def home(request):
+    return render(request, 'images/home.html')
+
 def gallery(request):
 
     category_order = ['medium', 'long', 'tall']
