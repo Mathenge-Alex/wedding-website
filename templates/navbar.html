@@ -1,35 +1,344 @@
 {% load static %}
 
+<nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container space">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'gallery' %}">
+            <img src="{% static 'img/logo.png' %}" alt="Logo" width="45" height="45" class="d-inline-block me-2" onerror="this.style.display='none'">
+            <span class="brand-text">Vesna Longton</span>
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        
+        <div class="collapse navbar-collapse" id="navbarMain">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href={% url "home" %}>Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href={% url "gallery" %}>PAINTINGs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href={% url "pricing" %}>PRICING</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href={% url "about_artist" %}>ABOUT ARTIST</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://www.vesnalongton-art.com">ART GALLERY</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href={% url "contact" %}>CONTACTS</a>
+                </li>
+                <li class="nav-item d-none d-lg-block ms-2">
+                    <a href={% url "contact" %} class="btn btn-primary btn-sm">Book Now</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
+<style>
+    /* Navbar specific styles */
+    .navbar {
+        padding: 0.75rem 0;
+    }
+    
+    .navbar-brand {
+        font-weight: 700;
+    }
+    
+    .brand-text {
+        font-size: 1.3rem;
+        color: var(--primary);
+        letter-spacing: 0.5px;
+    }
+    
+    .navbar-nav {
+        align-items: center;
+    }
+    
+    .nav-item {
+        position: relative;
+        margin: 0 0.15rem;
+    }
+    
+    .nav-link {
+        font-size: 0.85rem;
+        letter-spacing: 0.5px;
+        padding: 0.75rem 1rem !important;
+    }
+    
+    /* Active link indicator */
+    .nav-link.active::before {
+        content: '';
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: var(--primary);
+        top: 0.35rem;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    /* Animated hamburger menu */
+    .navbar-toggler {
+        padding: 0.25rem 0.5rem;
+        border: none;
+        background-color: transparent;
+        transition: all 0.3s ease;
+    }
+    
+    .navbar-toggler:focus {
+        box-shadow: none;
+        outline: none;
+    }
+    
+    /* Mobile menu adjustments */
+    @media (max-width: 991.98px) {
+        .navbar-collapse {
+            background-color: white;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            padding: 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        .dark-mode .navbar-collapse {
+            background-color: var(--bg-medium);
+        }
+        
+        .nav-link {
+            padding: 0.5rem 1rem !important;
+            border-radius: var(--radius-sm);
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background-color: var(--primary-transparent);
+        }
+        
+        .nav-link::after {
+            display: none;
+        }
+        
+        .nav-link.active::before {
+            left: 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .navbar-nav {
+            align-items: flex-start;
+        }
+        
+        .nav-item:last-child {
+            margin-top: 0.5rem;
+            width: 100%;
+        }
+        
+        .nav-item:last-child .btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+    }
+    
+    /* Add highlighted indicator for current page */
+    .nav-link[aria-current="page"] {
+        color: var(--primary);
+    }
+    
+    .nav-link[aria-current="page"]::after {
+        width: 80%;
+        left: 10%;
+    }
+    
+    /* Dropdown menu styles (if needed in the future) */
+    .dropdown-menu {
+        border: none;
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+        padding: 0.5rem;
+        min-width: 200px;
+    }
+    
+    .dropdown-item {
+        padding: 0.5rem 1rem;
+        border-radius: var(--radius-sm);
+        transition: all var(--transition-medium);
+    }
+    
+    .dropdown-item:hover, .dropdown-item:focus {
+        background-color: var(--primary-transparent);
+        color: var(--primary);
+    }
+    
+    /* Hover effect for navbar brand */
+    .navbar-brand {
+        transition: transform var(--transition-medium);
+    }
+    
+    .navbar-brand:hover {
+        transform: scale(1.05);
+    }
+    
+    /* Navigation hover indicators */
+    .nav-indicator-container {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        overflow: hidden;
+    }
+    
+    .nav-indicator {
+        position: absolute;
+        bottom: 0;
+        height: 3px;
+        background-color: var(--primary);
+        transition: transform 0.3s ease;
+        transform: translateX(-100%);
+    }
+    
+    /* Fixed navbar transition */
+    .navbar.scrolled .navbar-brand img {
+        transform: scale(0.9);
+        transition: transform 0.3s ease;
+    }
+    
+    .navbar.scrolled .nav-link {
+        padding-top: 0.6rem !important;
+        padding-bottom: 0.6rem !important;
+        transition: padding 0.3s ease;
+    }
+    
+    /* Interactive animation for the book now button */
+    .btn-primary {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .btn-primary::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: inherit;
+        transform: scale(0);
+        opacity: 0;
+        transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+    
+    .btn-primary:hover::before {
+        transform: scale(1.5);
+        opacity: 0;
+        animation: ripple 1s ease-out;
+    }
+    
+    @keyframes ripple {
+        from {
+            transform: scale(0);
+            opacity: 0.5;
+        }
+        to {
+            transform: scale(1.5);
+            opacity: 0;
+        }
+    }
+    
+    /* Dark mode adaptations */
+    .dark-mode .navbar {
+        background-color: rgba(45, 42, 40, 0.9) !important;
+    }
+    
+    .dark-mode .navbar-toggler-icon {
+        filter: invert(1);
+    }
+    
+    .dark-mode .brand-text {
+        color: var(--primary-light);
+    }
+    
+    .dark-mode .nav-link {
+        color: var(--text-light);
+    }
+    
+    .dark-mode .nav-link:hover, 
+    .dark-mode .nav-link:focus, 
+    .dark-mode .nav-link.active {
+        color: var(--primary-light);
+    }
+</style>
 
-
-<!-- Navbar -->
-            <section class="row">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light co-12">
-                    <a class="navbar-brand" href="#"></a>
-                    <button class="navbar-toggler me-3" type="button" data-toggle="collapse" data-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse flex justify-content-start" id="navbarNav">
-                        <ul class="navbar-nav">
-                            <li class="nav-item active">
-                                <a class="nav-link mx-5" href={% url "gallery" %}>WEDDING PAINTING</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link mx-5" href={% url "pricing" %}>PRICING</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link mx-5" href={% url "about_artist" %}>ABOUT ARTIST</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link mx-5" href="https://www.vesnalongton-art.com" target="_blank">ART GALLERY</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link mx-5" href={% url "contact" %}>CONTACTS</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-
-            </section>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set current page as active
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        navLinks.forEach(link => {
+            const linkPath = link.getAttribute('href');
+            if ((linkPath !== '#' && currentPath.includes(linkPath)) || 
+                (currentPath === '/' && linkPath === '#wedding-painting')) {
+                link.classList.add('active');
+                link.setAttribute('aria-current', 'page');
+            }
+        });
+        
+        // Animated hover effect for desktop
+        if (window.innerWidth > 992) {
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            navItems.forEach(item => {
+                const link = item.querySelector('.nav-link');
+                if (!link || link.parentNode.classList.contains('d-none')) return;
+                
+                // Create indicator container and indicator element
+                const indicatorContainer = document.createElement('div');
+                indicatorContainer.className = 'nav-indicator-container';
+                
+                const indicator = document.createElement('div');
+                indicator.className = 'nav-indicator';
+                indicator.style.width = '100%';
+                
+                indicatorContainer.appendChild(indicator);
+                item.appendChild(indicatorContainer);
+                
+                // Add hover events
+                item.addEventListener('mouseenter', () => {
+                    indicator.style.transform = 'translateX(0)';
+                });
+                
+                item.addEventListener('mouseleave', () => {
+                    indicator.style.transform = 'translateX(-100%)';
+                });
+            });
+        }
+        
+        // Navbar scroll effect
+        const navbar = document.querySelector('.navbar');
+        
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Initialize popovers and tooltips if Bootstrap JS is loaded
+        if (typeof bootstrap !== 'undefined') {
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        }
+    });
+</script>
