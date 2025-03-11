@@ -1,213 +1,237 @@
 {% extends "base.html" %}
 {% load static %}
-<!-- More Meta Description-->
-{% block meta %}
-<META NAME="description"
-    content="About live Event and Wedding artist Vesna Longton.She serves Ma, RI, CT, NH, Providence, Boston and more." />
-<META NAME="keywords"
-    content="Vesna Longton,wedding painter,live event painting,live event artist, event painting,Vesna longton,MA,RI,CT,NH,NJ" />
 
+{% block title %}About Vesna Longton - Live Event & Wedding Artist{% endblock title %}
+
+{% block meta %}
+<META NAME="description" content="About live Event and Wedding artist Vesna Longton. She serves MA, RI, CT, NH, Providence, Boston and more." />
+<META NAME="keywords" content="Vesna Longton, wedding painter, live event painting, live event artist, event painting, Vesna longton, MA, RI, CT, NH, NJ" />
 {% endblock meta %}
 
-<title>about live event artist Vesna Longton</title>
-
 {% block extracss %}
-
-<link rel="stylesheet" href="{% static "css/style.css" %}">
-
+<style>
+    .about-section {
+        position: relative;
+        background-color: var(--bg-light);
+        padding: 5rem 0;
+    }
+    
+    .bio-image {
+        width: 100%;
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-lg);
+        transform: rotate(-2deg);
+        transition: transform var(--transition-medium);
+    }
+    
+    .bio-image:hover {
+        transform: rotate(0deg) scale(1.02);
+    }
+    
+    .bio-content h1 {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 2rem;
+        color: var(--secondary);
+    }
+    
+    .bio-content h1::after {
+        content: '';
+        position: absolute;
+        width: 50px;
+        height: 3px;
+        background: var(--primary);
+        bottom: -10px;
+        left: 0;
+    }
+    
+    .dark-mode .bio-content h1 {
+        color: var(--text-light);
+    }
+    
+    .bio-content p {
+        color: var(--text-medium);
+        margin-bottom: 1.5rem;
+        font-size: 1.05rem;
+        line-height: 1.7;
+    }
+    
+    .dark-mode .bio-content p {
+        color: var(--text-light);
+        opacity: 0.9;
+    }
+    
+    .exhibition-section {
+        background-color: var(--bg-medium);
+        padding: 5rem 0;
+    }
+    
+    .section-title {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 3rem;
+        color: var(--secondary);
+    }
+    
+    .section-title::after {
+        content: '';
+        position: absolute;
+        width: 60px;
+        height: 3px;
+        background: var(--primary);
+        bottom: -10px;
+        left: 0;
+    }
+    
+    .dark-mode .section-title {
+        color: var(--text-light);
+    }
+    
+    .exhibitions-list {
+        list-style: none;
+        padding-left: 0;
+    }
+    
+    .exhibitions-list li {
+        position: relative;
+        padding-left: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--text-medium);
+    }
+    
+    .dark-mode .exhibitions-list li {
+        color: var(--text-light);
+        opacity: 0.9;
+    }
+    
+    .exhibitions-list li::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0.5rem;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: var(--primary);
+    }
+    
+    .exhibition-image {
+        width: 100%;
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-lg);
+        transform: rotate(2deg);
+        transition: transform var(--transition-medium);
+    }
+    
+    .exhibition-image:hover {
+        transform: rotate(0deg) scale(1.02);
+    }
+    
+    @media (max-width: 992px) {
+        .bio-image, .exhibition-image {
+            margin-bottom: 2rem;
+        }
+    }
+</style>
 {% endblock extracss %}
 
 {% block content %}
-
-
-<section class="mt-5 about-artist space ">
-    <div class="row m-auto">
-
-        <div class="col-md-5 ">
-            <img class="text-center" src="{% static "images/me/me_on_rober_cox_wedding.jpg" %}"
-                alt="vesna longton on rober cox wedding">
-        </div>
-        <div class="col-md-6 biography m-auto">
-            <p>
-            <h1>Biography</h1>
-            </p>
-            <br>
-            <p>Vesna Longton is a professional artist with a formal art education. She has over 17 years of experience
-                in live event painting.</p>
-            <p> She paints live at events, including Weddings, Fundraisers, Bar or Bat Mitzvahs, Graduations,
-                Quinceañeras, Christmas Parties, Corporate Functions.
-
-                She serves MA, RI, CT, NH, NY, ME and VT.</p>
-
-            <p>Vesna was born in 1974 in Moscow, Russia. <br>
-                1996 Graduated from Moscow State Pedagogical University, Faculty of Fine Art. <br>
-                1992-1997- Studied fine art at the art studio Old School of Boris Ilyuhin. <br>
-                1996-1998 - Studied painting at the private art studio of Adronik Yakubyan. <br>
-                Since 2006 Vesna Longton has lived in Massachusetts USA. She is a freelance artist . <br>
-                Besides painting live event art , Vesna is an innovative artist who creates three dimensional images on
-                glass and in resin which incorporate the element of light.She also creates sculptures made with elements
-                of resing, colors and lights.</p>
-        </div>
-    </div>
-
-
-    <div class="row m-auto">
-        <h1 class="mt-5 mb-3 "> Exhibitions</h1>
-
-        <!-- Exhibitions Row -->
-        <div class="exhibitions col-md-5 ">
-            <ul class="">
-                <li> 1998 Group Exhibition Old School at Belyaevo Exhibition Hall. Moscow, Russia.</li>
-
-                <li> 2000 Group Art Show Christmas Fair at the Central House of Artists. Moscow, Russia.</li>
-
-
-                <li> 2001 Group art show Golden Brush. At Maliy Manej. Moscow, Russia.
-                </li>
-
-                <li> 2001 Solo exhibition at the State Exhibition Hall Nasledie (Legacy). Moscow, Russia</li>
-
-
-                <li> 2001 Yang artists exhibition Autumn -2001 at Moscow House of Art ( MOSKH). Moscow, Russia.
-                </li>
-
-
-                <li> 2002 International Art show Art Gallery -2002 at the Central House of Art. Moscow, Russia.
-                </li>
-
-
-                <li> 2003 International Art show Art gallery -2003 at the Central House of Art. Moscow, Russia.
-                </li>
-
-
-                <li> 2005 Solo exhibition at personal studio Art Studio at Myasnitskaya. Moscow, Russia.</li>
-
-
-                <li> 2005 Group exhibition Portraits show at Studio at Myasnitskaya. Moscow, Russia.</li>
-
-
-                <li> 2006 Group exhibition Coloreuphoria at Studio at Myasnitskaya. Moscow, Russia.</li>
-
-
-                <li> 2006 Group exhibition Love, Hope, Believe and Life at Studio at Myasnitskaya. Moscow, Russia
-                </li>
-
-
-                <li> 2006 Group exhibition Russia at Studio at Myasnitskaya. Moscow, Russia</li>
-
-
-                <li> 2006 Group exhibition Women's images at Art Gallery Labase. Moscow, Russia.</li>
-
-
-                <li> 2006 Yang artists exhibition War and Peace at Moscow House of Art ( MOSKH). Moscow, Russia
-                </li>
-
-
-                <li> 2007 Group exhibition Russia in New Year at Art Gallery Labase. Moscow, Russia</li>
-
-
-                <li> 2007 Group exhibition Landscapes/Mindscapes at Art Gallery 181 in Lawrence, MA</li>
-
-
-                <li> 2009 Members exhibition at Attleboro Museum, MA
-                </li>
-
-                <li> 2010 Solo exhibitions at Art Gallery Labase . Moscow, Russia
-                </li>
-
-                <li> 2010 Group exhibition Night of the living art at Art and custom framing gallery Bridgwater,
-                    MA</li>
-
-
-                <li> 2012 Group Exhibition at Blue Glass cafe,Boston,Ma
-                </li>
-
-                <li> 2013- Flower show , Attleboro art museum.
-                </li>
-
-                <li> 2013 Attleboro museum members art show.
-                </li>
-
-                <li> 2014 Flower show, Attleboro art museum
-                </li>
-
-                <li> 2014 Attleboro museum members art show
-                </li>
-
-                <li> 2015 Attleboro museum members art show
-                </li>
-
-                <li> 2015 Flower show, Attleboro art museum
-                </li>
-
-                <li> 2016 Attleboro museum members art show
-                </li>
-
-                <li> 2016 Flower show, Attleboro art museum
-                </li>
-
-                <li> 2017 Attleboro museum members art show
-                </li>
-
-                <li> 2017 Flower show, Attleboro art museum
-                </li>
-
-                <li> 2018 Attleboro museum members art show
-                </li>
-
-                <li> 2018 Flower show, Attleboro art museum
-                </li>
-
-                <li> 2019 Attleboro museum members art show
-                </li>
-
-                <li> 2019 Flower show, Attleboro art museum
-                </li>
-
-                <li> 2020 Attleboro museum members art show
-                </li>
-
-                <li> 2020 Flower show, Attleboro art museum
-                </li>
-
-                <li> 2021 Attleboro museum members art show
-                </li>
-
-                <li> 2021 Solo exhibition at Preservation framer, North Attleboro,MA
-                </li>
-
-                <li> 2021 Pawtucket collaborative members winter show
-                </li>
-
-                <li> 2021 DeBlois ( Middletown,RI) Christams Show
-                </li>
-
-                <li> 2022 DeBlois (MIddletown,RI) Annual Spring Open Show on the theme "Beauty and the Beast"</li>
-
-
-                <li> 2022. Pawtucket Foundation Show
-                </li>
-
-                <li> 2022 Attleboro Art Museum Flower Show
-                </li>
-
-            </ul>
-
-        </div>
-
-
-
-        <div class="col-md-5 mx-auto">
-            <div class=" m-auto">
-                <img class="text-center p-2" src="{% static "images/me/vesna longton at ashley wedding.jpg" %}"
-                    alt="vesna longton at ashley wedding">
+<!-- Biography Section -->
+<section class="about-section" id="about">
+    <div class="container space">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-5" data-aos="fade-right">
+                <div class="bio-image-container">
+                    <img class="bio-image img-fluid" src="{% static 'images/me/me_on_rober_cox_wedding.jpg' %}" alt="Vesna Longton painting at Robert Cox wedding">
+                </div>
+            </div>
+            
+            <div class="col-lg-7" data-aos="fade-left">
+                <div class="bio-content">
+                    <h1 class="fw-bold">Biography</h1>
+                    
+                    <p class="lead">Vesna Longton is a professional artist with a formal art education. She has over 17 years of experience in live event painting.</p>
+                    
+                    <p>She paints live at events, including Weddings, Fundraisers, Bar or Bat Mitzvahs, Graduations, Quinceañeras, Christmas Parties, and Corporate Functions. She serves MA, RI, CT, NH, NY, ME and VT.</p>
+                    
+                    <p>Vesna was born in 1974 in Moscow, Russia.</p>
+                    
+                    <div class="education mb-4">
+                        <p class="mb-1">• 1996 - Graduated from Moscow State Pedagogical University, Faculty of Fine Art</p>
+                        <p class="mb-1">• 1992-1997 - Studied fine art at the art studio Old School of Boris Ilyuhin</p>
+                        <p class="mb-1">• 1996-1998 - Studied painting at the private art studio of Adronik Yakubyan</p>
+                    </div>
+                    
+                    <p>Since 2006 Vesna Longton has lived in Massachusetts, USA. She is a freelance artist. Besides painting live event art, Vesna is an innovative artist who creates three-dimensional images on glass and in resin which incorporate the element of light. She also creates sculptures made with elements of resin, colors, and lights.</p>
+                    
+                    <div class="mt-4">
+                        <a href="{% url 'gallery' %}" class="btn btn-primary">View Exhibitions</a>
+                        <a href="{% url 'contact' %}" class="btn btn-outline-primary ms-2">Contact Vesna</a>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
-
-
 </section>
 
-
+<!-- Exhibitions Section -->
+<section class="exhibition-section" id="exhibitions">
+    <div class="container space">
+        <div class="row">
+            <div class="col-lg-12" data-aos="fade-up">
+                <h2 class="section-title fw-bold mb-4">Exhibitions</h2>
+            </div>
+        </div>
+        
+        <div class="row g-5">
+            <div class="col-lg-7" data-aos="fade-right">
+                <div class="exhibitions-wrapper">
+                    <ul class="exhibitions-list row">
+                        <div class="col-md-6">
+                            <li>1998 Group Exhibition Old School at Belyaevo Exhibition Hall. Moscow, Russia.</li>
+                            <li>2000 Group Art Show Christmas Fair at the Central House of Artists. Moscow, Russia.</li>
+                            <li>2001 Group art show Golden Brush. At Maliy Manej. Moscow, Russia.</li>
+                            <li>2001 Solo exhibition at the State Exhibition Hall Nasledie (Legacy). Moscow, Russia.</li>
+                            <li>2001 Yang artists exhibition Autumn-2001 at Moscow House of Art (MOSKH). Moscow, Russia.</li>
+                            <li>2002 International Art show Art Gallery-2002 at the Central House of Art. Moscow, Russia.</li>
+                            <li>2003 International Art show Art gallery-2003 at the Central House of Art. Moscow, Russia.</li>
+                            <li>2005 Solo exhibition at personal studio Art Studio at Myasnitskaya. Moscow, Russia.</li>
+                            <li>2005 Group exhibition Portraits show at Studio at Myasnitskaya. Moscow, Russia.</li>
+                            <li>2006 Group exhibition Coloreuphoria at Studio at Myasnitskaya. Moscow, Russia.</li>
+                            <li>2006 Group exhibition Love, Hope, Believe and Life at Studio at Myasnitskaya. Moscow, Russia.</li>
+                            <li>2006 Group exhibition Russia at Studio at Myasnitskaya. Moscow, Russia.</li>
+                            <li>2006 Group exhibition Women's images at Art Gallery Labase. Moscow, Russia.</li>
+                            <li>2006 Yang artists exhibition War and Peace at Moscow House of Art (MOSKH). Moscow, Russia.</li>
+                            <li>2007 Group exhibition Russia in New Year at Art Gallery Labase. Moscow, Russia.</li>
+                            <li>2007 Group exhibition Landscapes/Mindscapes at Art Gallery 181 in Lawrence, MA.</li>
+                        </div>
+                        <div class="col-md-6">
+                            <li>2009 Members exhibition at Attleboro Museum, MA.</li>
+                            <li>2010 Solo exhibitions at Art Gallery Labase. Moscow, Russia.</li>
+                            <li>2010 Group exhibition Night of the living art at Art and custom framing gallery Bridgwater, MA.</li>
+                            <li>2012 Group Exhibition at Blue Glass cafe, Boston, MA.</li>
+                            <li>2013 Flower show, Attleboro art museum.</li>
+                            <li>2013 Attleboro museum members art show.</li>
+                            <li>2014 Flower show, Attleboro art museum.</li>
+                            <li>2014 Attleboro museum members art show.</li>
+                            <li>2015-2021 Various Attleboro museum members art shows and Flower shows.</li>
+                            <li>2021 Solo exhibition at Preservation framer, North Attleboro, MA.</li>
+                            <li>2021 Pawtucket collaborative members winter show.</li>
+                            <li>2021 DeBlois (Middletown, RI) Christmas Show.</li>
+                            <li>2022 DeBlois (Middletown, RI) Annual Spring Open Show on the theme "Beauty and the Beast".</li>
+                            <li>2022 Pawtucket Foundation Show.</li>
+                            <li>2022 Attleboro Art Museum Flower Show.</li>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="col-lg-5" data-aos="fade-left">
+                <div class="exhibition-image-container">
+                    <img class="exhibition-image img-fluid" src="{% static 'images/me/vesna longton at ashley wedding.jpg' %}" alt="Vesna Longton painting at Ashley's wedding">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
