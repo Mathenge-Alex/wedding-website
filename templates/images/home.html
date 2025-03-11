@@ -1,0 +1,795 @@
+{% extends "base.html" %} {% load static %}
+{% block extracss %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<style>
+    /* Hero Section Styles */
+    .hero-section {
+        position: relative;
+        background-color: var(--bg-light);
+        padding: 6rem 0 4rem;
+        overflow: hidden;
+    }
+    
+    .hero-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('{% static "img/hero-bg.jpg" %}');
+        background-size: cover;
+        background-position: center;
+        opacity: 0.1;
+        z-index: 0;
+    }
+    
+    .dark-mode .hero-bg {
+        opacity: 0.05;
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    
+    .hero-title {
+        font-size: var(--font-size-4xl);
+        color: var(--secondary);
+        margin-bottom: 1.5rem;
+        font-weight: 800;
+        line-height: 1.2;
+    }
+    
+    .hero-title span {
+        color: var(--primary);
+    }
+    
+    .dark-mode .hero-title {
+        color: var(--text-light);
+    }
+    
+    .hero-description {
+        font-size: var(--font-size-lg);
+        color: var(--text-medium);
+        margin-bottom: 2.5rem;
+    }
+    
+    .dark-mode .hero-description {
+        color: var(--text-light);
+        opacity: 0.8;
+    }
+    
+    .hero-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 3rem;
+    }
+    
+    /* Stats Section */
+    .stats-section {
+        padding: 0 0 4rem;
+    }
+    
+    .stat-list {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+    }
+    
+    .stat-item {
+        text-align: center;
+        padding: 1.5rem;
+        background-color: white;
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+        min-width: 150px;
+        transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+    }
+    
+    .dark-mode .stat-item {
+        background-color: var(--bg-dark);
+    }
+    
+    .stat-item:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .stat-item h3 {
+        font-size: var(--font-size-2xl);
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+    }
+    
+    .stat-item p {
+        font-size: var(--font-size-sm);
+        color: var(--text-medium);
+        margin-bottom: 0;
+    }
+    
+    .dark-mode .stat-item p {
+        color: var(--text-light);
+        opacity: 0.8;
+    }
+    
+    /* Features Section */
+    .features-section {
+        padding: 5rem 0;
+        background-color: var(--bg-medium);
+    }
+    
+    .section-title {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    
+    .section-title h2 {
+        font-size: var(--font-size-3xl);
+        color: var(--secondary);
+        position: relative;
+        display: inline-block;
+        margin-bottom: 1rem;
+    }
+    
+    .section-title h2::after {
+        content: '';
+        position: absolute;
+        width: 60px;
+        height: 3px;
+        background: var(--primary);
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .dark-mode .section-title h2 {
+        color: var(--text-light);
+    }
+    
+    .feature-card {
+        background-color: white;
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+        padding: 2rem;
+        text-align: center;
+        height: 100%;
+        transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+    }
+    
+    .dark-mode .feature-card {
+        background-color: var(--bg-dark);
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .feature-icon {
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--primary-transparent);
+        color: var(--primary);
+        font-size: 2rem;
+        border-radius: 50%;
+        margin: 0 auto 1.5rem;
+    }
+    
+    .feature-title {
+        font-size: var(--font-size-xl);
+        color: var(--secondary);
+        margin-bottom: 1rem;
+    }
+    
+    .dark-mode .feature-title {
+        color: var(--text-light);
+    }
+    
+    .feature-text {
+        color: var(--text-medium);
+        font-size: var(--font-size-md);
+    }
+    
+    .dark-mode .feature-text {
+        color: var(--text-light);
+        opacity: 0.7;
+    }
+    
+    /* Process Section */
+    .process-section {
+        padding: 5rem 0;
+        background-color: var(--bg-light);
+    }
+    
+    .process-steps {
+        margin-top: 4rem;
+    }
+    
+    .process-step {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 3rem;
+        position: relative;
+    }
+    
+    .process-step:last-child {
+        margin-bottom: 0;
+    }
+    
+    .process-step:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        width: 2px;
+        background-color: var(--primary-light);
+        height: calc(100% + 3rem);
+        top: 0;
+        left: 36px;
+        z-index: 0;
+    }
+    
+    .step-number {
+        width: 75px;
+        height: 75px;
+        border-radius: 50%;
+        background-color: var(--primary);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-right: 2rem;
+        flex-shrink: 0;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .step-content {
+        flex: 1;
+        background-color: white;
+        padding: 2rem;
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+    }
+    
+    .dark-mode .step-content {
+        background-color: var(--bg-dark);
+    }
+    
+    .step-title {
+        font-size: var(--font-size-xl);
+        color: var(--secondary);
+        margin-bottom: 1rem;
+    }
+    
+    .dark-mode .step-title {
+        color: var(--text-light);
+    }
+    
+    /* Gallery Preview Section */
+    .gallery-preview-section {
+        padding: 5rem 0;
+        background-color: var(--bg-medium);
+    }
+    
+    .gallery-preview-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+        margin-top: 2.5rem;
+    }
+    
+    .preview-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--radius-md);
+        aspect-ratio: 1;
+        box-shadow: var(--shadow-md);
+        transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+    }
+    
+    .preview-item:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .preview-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform var(--transition-medium);
+    }
+    
+    .preview-item:hover img {
+        transform: scale(1.05);
+    }
+    
+    .preview-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        padding: 2rem 1rem 1rem;
+        color: white;
+        opacity: 0;
+        transition: opacity var(--transition-medium);
+    }
+    
+    .preview-item:hover .preview-overlay {
+        opacity: 1;
+    }
+    
+    .preview-title {
+        font-size: var(--font-size-md);
+        margin-bottom: 0.25rem;
+    }
+    
+    .preview-category {
+        font-size: var(--font-size-sm);
+        color: var(--primary-light);
+    }
+    
+    .view-all-btn {
+        text-align: center;
+        margin-top: 3rem;
+    }
+    
+    /* Testimonials Section */
+    .testimonials-section {
+        padding: 5rem 0;
+        background-color: var(--bg-light);
+    }
+    
+    .testimonial-card {
+        background-color: white;
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+        padding: 2rem;
+        text-align: center;
+        position: relative;
+        margin-top: 3rem;
+        transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+        height: 100%;
+    }
+    
+    .dark-mode .testimonial-card {
+        background-color: var(--bg-dark);
+    }
+    
+    .testimonial-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .testimonial-image {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid var(--primary);
+        position: absolute;
+        top: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: white;
+    }
+    
+    .dark-mode .testimonial-image {
+        background-color: var(--bg-dark);
+    }
+    
+    .testimonial-text {
+        font-style: italic;
+        color: var(--text-medium);
+        margin: 2.5rem 0 1.5rem;
+        position: relative;
+    }
+    
+    .dark-mode .testimonial-text {
+        color: var(--text-light);
+        opacity: 0.8;
+    }
+    
+    .testimonial-text::before,
+    .testimonial-text::after {
+        content: '"';
+        font-size: 3rem;
+        color: var(--primary-transparent);
+        position: absolute;
+        font-family: serif;
+        line-height: 1;
+    }
+    
+    .testimonial-text::before {
+        top: -20px;
+        left: -10px;
+    }
+    
+    .testimonial-text::after {
+        bottom: -40px;
+        right: -10px;
+    }
+    
+    .testimonial-name {
+        font-weight: 700;
+        color: var(--secondary);
+        margin-bottom: 0.25rem;
+    }
+    
+    .dark-mode .testimonial-name {
+        color: var(--text-light);
+    }
+    
+    .testimonial-venue {
+        font-size: var(--font-size-sm);
+        color: var(--primary);
+    }
+    
+    /* CTA Section */
+    .cta-section {
+        background-color: var(--primary);
+        color: white;
+        padding: 5rem 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .cta-bg-shape {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 300px;
+        height: 300px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        transform: translate(50%, -50%);
+        z-index: 0;
+    }
+    
+    .cta-content {
+        position: relative;
+        z-index: 1;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+    
+    .cta-title {
+        font-size: var(--font-size-3xl);
+        margin-bottom: 1.5rem;
+        color: white;
+    }
+    
+    .cta-text {
+        font-size: var(--font-size-lg);
+        margin-bottom: 2rem;
+        opacity: 0.9;
+    }
+    
+    .btn-light {
+        background-color: white;
+        color: var(--primary);
+        padding: 0.75rem 2.5rem;
+        font-weight: 600;
+        border-radius: 50px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        transition: all var(--transition-medium);
+    }
+    
+    .btn-light:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 992px) {
+        .hero-title {
+            font-size: var(--font-size-3xl);
+        }
+        
+        .hero-description {
+            font-size: var(--font-size-md);
+        }
+        
+        .hero-buttons {
+            flex-direction: column;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .stat-list {
+            flex-direction: column;
+            gap: 1.5rem;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        
+        .gallery-preview-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .process-step {
+            flex-direction: column;
+        }
+        
+        .process-step:not(:last-child)::after {
+            display: none;
+        }
+        
+        .step-number {
+            margin-right: 0;
+            margin-bottom: 1.5rem;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: var(--font-size-2xl);
+        }
+        
+        .feature-card, .testimonial-card {
+            margin-bottom: 2rem;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .hero-section {
+            padding: 4rem 0 3rem;
+        }
+        
+        .hero-title {
+            font-size: var(--font-size-xl);
+        }
+        
+        .gallery-preview-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+        
+        .cta-title {
+            font-size: var(--font-size-2xl);
+        }
+        
+        .cta-text {
+            font-size: var(--font-size-md);
+        }
+    }
+</style>
+{% endblock extracss %}
+
+{% block title %}Vesna Longton - Live Wedding & Event Painting{% endblock title %}
+
+{% block meta %}
+<META NAME="description" content="Live event and Wedding painting by Vesna Longton, based in Attleboro, MA. We serve MA, RI, CT, NH, Providence, Boston and more." />
+<META NAME="keywords" content="wedding painting, event painting, event artist, wedding painter, event painter, Vesna Longton, MA, RI, CT, NH, NJ" />
+{% endblock meta %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section" id="home">
+    <div class="hero-bg"></div>
+    <div class="container space">
+        <div class="hero-content" data-aos="fade-up">
+            <h1 class="hero-title">Capture Your <span>Special Moments</span> Through Beautiful Art</h1>
+            <p class="hero-description">Vesna Longton creates stunning live paintings during your wedding or special event, preserving your most cherished memories in a timeless work of art.</p>
+            <div class="hero-buttons">
+                <a href="{% url 'about_artist' %}"class="btn btn-primary">Explore Artist</a>
+                <a href="{% url 'gallery' %}" class="btn btn-outline-primary">View Gallery</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+    <div class="container space">
+        <div class="stat-list" data-aos="fade-up">
+            <div class="stat-item">
+                <h3>100+</h3>
+                <p>Events Painted</p>
+            </div>
+            <div class="stat-item">
+                <h3>15+</h3>
+                <p>Years Experience</p>
+            </div>
+            <div class="stat-item">
+                <h3>5★</h3>
+                <p>Customer Rating</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section" id="services">
+    <div class="container space">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Services</h2>
+            <p>Professional live painting for your special moments</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3 class="feature-title">Wedding Painting</h3>
+                    <p class="feature-text">Have your wedding ceremony or reception captured in a beautiful live painting that will become a treasured heirloom.</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-glass-cheers"></i>
+                    </div>
+                    <h3 class="feature-title">Event Painting</h3>
+                    <p class="feature-text">Corporate events, galas, anniversaries, and other special occasions preserved in an artistic representation.</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h3 class="feature-title">Commissioned Art</h3>
+                    <p class="feature-text">Custom paintings created from your photographs or memories, perfect for gifts or commemorating special occasions.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Process Section -->
+<section class="process-section" id="process">
+    <div class="container space">
+        <div class="section-title" data-aos="fade-up">
+            <h2>How It Works</h2>
+            <p>A simple process from booking to finished painting</p>
+        </div>
+        
+        <div class="process-steps">
+            <div class="process-step" data-aos="fade-up">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3 class="step-title">Initial Consultation</h3>
+                    <p>We'll discuss your event details, venue, and what moments you'd like captured in your painting. This helps me understand your vision and preferences.</p>
+                </div>
+            </div>
+            
+            <div class="process-step" data-aos="fade-up" data-aos-delay="100">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3 class="step-title">Live Painting at Your Event</h3>
+                    <p>I'll arrive 1-2 hours before your event to set up in an unobtrusive location. Throughout the event, I'll create a painting that captures the essence and emotions of your special day.</p>
+                </div>
+            </div>
+            
+            <div class="process-step" data-aos="fade-up" data-aos-delay="200">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3 class="step-title">Studio Finishing</h3>
+                    <p>After your event, I'll take the painting back to my studio to add final details and touches. This ensures your painting is perfect before delivery.</p>
+                </div>
+            </div>
+            
+            <div class="process-step" data-aos="fade-up" data-aos-delay="300">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3 class="step-title">Delivery of Your Masterpiece</h3>
+                    <p>Your completed painting will be delivered to you, ready to display in your home as a beautiful reminder of your special day for years to come.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery Preview Section -->
+<section class="gallery-preview-section" id="gallery-preview">
+    <div class="container space">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Gallery</h2>
+            <p>A selection of recent paintings from weddings and events</p>
+        </div>
+        
+        <div class="gallery-preview-grid" data-aos="fade-up" data-aos-delay="100">
+            <!-- These would be dynamically loaded from your database -->
+            <div class="preview-item">
+                <img src="/api/placeholder/400/400" alt="Wedding Painting">
+                <div class="preview-overlay">
+                    <h4 class="preview-title">Smith Wedding</h4>
+                    <p class="preview-category">Ceremony</p>
+                </div>
+            </div>
+            <div class="preview-item">
+                <img src="/api/placeholder/400/400" alt="Wedding Painting">
+                <div class="preview-overlay">
+                    <h4 class="preview-title">Johnson Wedding</h4>
+                    <p class="preview-category">Reception</p>
+                </div>
+            </div>
+            <div class="preview-item">
+                <img src="/api/placeholder/400/400" alt="Wedding Painting">
+                <div class="preview-overlay">
+                    <h4 class="preview-title">Boston Charity Gala</h4>
+                    <p class="preview-category">Corporate Event</p>
+                </div>
+            </div>
+            <div class="preview-item">
+                <img src="/api/placeholder/400/400" alt="Wedding Painting">
+                <div class="preview-overlay">
+                    <h4 class="preview-title">Williams Wedding</h4>
+                    <p class="preview-category">First Dance</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="view-all-btn" data-aos="fade-up" data-aos-delay="200">
+            <a href="{% url 'gallery' %}" class="btn btn-outline-primary">View Full Gallery</a>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section" id="testimonials">
+    <div class="container space">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Client Testimonials</h2>
+            <p>What couples and event hosts are saying</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="testimonial-card">
+                    <img src="/api/placeholder/150/150" alt="Client" class="testimonial-image">
+                    <p class="testimonial-text">Vesna captured our wedding day beautifully! Guests loved watching her paint during the reception, and now we have this amazing keepsake to remember our special day.</p>
+                    <h4 class="testimonial-name">Sarah & Michael</h4>
+                    <p class="testimonial-venue">Boston Wedding</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="testimonial-card">
+                    <img src="/api/placeholder/150/150" alt="Client" class="testimonial-image">
+                    <p class="testimonial-text">Working with Vesna was a dream. She captured the essence of our venue and the emotions of our guests perfectly. The painting is now the centerpiece of our living room.</p>
+                    <h4 class="testimonial-name">Jennifer & David</h4>
+                    <p class="testimonial-venue">Newport Wedding</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="testimonial-card">
+                    <img src="/api/placeholder/150/150" alt="Client" class="testimonial-image">
+                    <p class="testimonial-text">For our annual fundraising gala, Vesna created a stunning painting that we auctioned off at the end of the night. It was a huge hit and helped us raise additional funds for our cause.</p>
+                    <h4 class="testimonial-name">Robert Johnson</h4>
+                    <p class="testimonial-venue">Charity Gala Director</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section" id="booking">
+    <div class="cta-bg-shape"></div>
+    <div class="container space">
+        <div class="cta-content" data-aos="fade-up">
+            <h2 class="cta-title">Ready to Capture Your Special Day?</h2>
+            <p class="cta-text">Contact me today to check availability for your upcoming wedding or event. Limited dates available each season.</p>
+            <a href="{% url 'contact' %}" class="btn btn-light">Request Information</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
