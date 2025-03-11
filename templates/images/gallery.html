@@ -1,46 +1,566 @@
 {% extends "base.html" %} {% load static %}
 {% block extracss %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-<link rel="stylesheet" href="{% static "css/style.css" %}">
-
+<style>
+    /* Gallery-specific styles */
+    .gallery-section {
+        padding: var(--space-3xl) 0;
+        background-color: var(--bg-light);
+        position: relative;
+        z-index: 1;
+    }
+    
+    .gallery-header {
+        text-align: center;
+        margin-bottom: var(--space-2xl);
+    }
+    
+    .gallery-title {
+        font-size: var(--font-size-3xl);
+        color: var(--secondary);
+        margin-bottom: var(--space-md);
+        position: relative;
+        display: inline-block;
+    }
+    
+    .gallery-title::after {
+        content: '';
+        position: absolute;
+        width: 60px;
+        height: 3px;
+        background: var(--primary);
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .gallery-description {
+        max-width: 700px;
+        margin: 0 auto;
+        color: var(--text-medium);
+    }
+    
+    /* Category Navigation */
+    .category-nav {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: var(--space-xl);
+        gap: var(--space-sm);
+    }
+    
+    .category-button {
+        padding: 0.5rem 1.5rem;
+        border: none;
+        background-color: white;
+        color: var(--text-medium);
+        border-radius: 30px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all var(--transition-medium);
+        box-shadow: var(--shadow-sm);
+    }
+    
+    .category-button:hover, .category-button.active {
+        background-color: var(--primary);
+        color: white;
+        box-shadow: var(--shadow-md);
+    }
+    
+    .dark-mode .category-button {
+        background-color: var(--bg-medium);
+    }
+    
+    .dark-mode .category-button:hover, .dark-mode .category-button.active {
+        background-color: var(--primary);
+    }
+    
+    /* Gallery Container */
+    .gallery-container {
+        position: relative;
+    }
+    
+    .category-section {
+        margin-bottom: var(--space-3xl);
+    }
+    
+    .category-section:last-child {
+        margin-bottom: 0;
+    }
+    
+    .category-title {
+        font-size: var(--font-size-xl);
+        color: var(--secondary);
+        margin-bottom: var(--space-lg);
+        text-transform: capitalize;
+        position: relative;
+        padding-left: var(--space-lg);
+    }
+    
+    .category-title::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 5px;
+        height: 25px;
+        background-color: var(--primary);
+        border-radius: var(--radius-sm);
+    }
+    
+    .dark-mode .category-title {
+        color: var(--text-light);
+    }
+    
+    /* Image Grid */
+    .image-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-xl); /* Increased from space-md */
+    margin: 0 auto;
+    max-width: 1400px; /* Add max-width for larger screens */
+}
+    
+    /* Image Cards */
+    .image-card {
+        position: relative;
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+        overflow: hidden;
+        transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+        background-color: white;
+    }
+    
+    .dark-mode .image-card {
+        background-color: var(--bg-dark);
+    }
+    
+    .image-card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .image-link {
+        display: block;
+        width: 100%;
+        height: 100%;
+        text-decoration: none;
+        color: inherit;
+    }
+    
+    .image-wrapper {
+        position: relative;
+        width: 100%;
+        padding-top: 100%; /* 1:1 Aspect Ratio */
+        overflow: hidden;
+    }
+    
+    /* Category-specific aspect ratios */
+    .category-medium .image-wrapper {
+        padding-top: 75%; /* 4:3 Aspect Ratio for medium images */
+    }
+    
+    .category-long .image-wrapper {
+        padding-top: 56.25%; /* 16:9 Aspect Ratio for long images */
+    }
+    
+    .category-tall .image-wrapper {
+        padding-top: 133.33%; /* 3:4 Aspect Ratio for tall images */
+    }
+    
+    .image-card img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform var(--transition-slow);
+    }
+    
+    .image-card:hover img {
+        transform: scale(1.05);
+    }
+    
+    .image-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        padding: var(--space-lg) var(--space-md) var(--space-md);
+        color: white;
+        opacity: 0;
+        transition: opacity var(--transition-medium);
+    }
+    
+    .image-card:hover .image-overlay {
+        opacity: 1;
+    }
+    
+    .image-title {
+        font-size: var(--font-size-md);
+        margin-bottom: var(--space-xs);
+        font-weight: 600;
+    }
+    
+    .image-category {
+        font-size: var(--font-size-sm);
+        color: var(--primary-light);
+        text-transform: capitalize;
+    }
+    
+    .zoom-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.8);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: var(--primary);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: all var(--transition-medium);
+    }
+    
+    .image-card:hover .zoom-icon {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    
+    /* Load More Button */
+    .load-more-container {
+        text-align: center;
+        margin-top: var(--space-2xl);
+    }
+    
+    /* Empty Category Message */
+    .empty-category {
+        text-align: center;
+        padding: var(--space-2xl) 0;
+        color: var(--text-medium);
+    }
+    
+    .empty-category i {
+        font-size: 3rem;
+        color: var(--primary-light);
+        margin-bottom: var(--space-md);
+        opacity: 0.6;
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 1200px) {
+        .image-grid {
+            gap: var(--space-md);
+        }
+    }
+    
+    @media (max-width: 992px) {
+        .image-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg); /* Increased */
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .image-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-md); /* Increased from default */
+        }
+        
+        .gallery-title {
+            font-size: var(--font-size-2xl);
+        }
+        
+        .category-title {
+            font-size: var(--font-size-lg);
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .category-button {
+            padding: 0.4rem 1rem;
+            font-size: var(--font-size-sm);
+        }
+        
+        .image-grid {
+            gap: var(--space-sm); /* Increased from space-xs */
+        }
+        
+        .image-overlay {
+            padding: var(--space-md) var(--space-sm) var(--space-sm);
+        }
+        
+        .image-title {
+            font-size: var(--font-size-sm);
+        }
+        
+        .zoom-icon {
+            width: 40px;
+            height: 40px;
+        }
+    }
+</style>
 {% endblock extracss %}
 
 <!--Title-->
+{% block title %}Art Gallery | Vesna Longton - Wedding & Event Painting{% endblock title %}
+
 {% block meta %}
-    <META NAME="description" content="Live event and Wedding painting by Vesna Longton, based in Attleboro, MA .We serve Ma, RI, CT, NH, Providence, Boston and more." />
-
-    <META NAME="keywords" content="wedding painting,event painting, event artist, wedding painter, event painter,Vesna longton, MA, RI, CT, NH, NJ" />
-
+<META NAME="description" content="Browse the gallery of live event and wedding paintings by Vesna Longton, based in Attleboro, MA. Serving MA, RI, CT, NH, Providence, Boston and more." />
+<META NAME="keywords" content="wedding painting, event painting, event artist, wedding painter, event painter, Vesna Longton, MA, RI, CT, NH, NJ, painting gallery" />
 {% endblock meta %}
 
-<title>Live event - Wedding painting,MA,RI,CT,NY,NJ</title>
-
-
 <!-- Main Content -->
-
-{% include "header.html"%}
 {% block content %}
-
-</head>
-<body>
-
 <section class="gallery-section">
-    <div class="gallery mt-2">
-        {% for category, images_in_category in images.items %}
-            {% comment %} <h2>{{ category|title }}</h2> {% endcomment %}
-            <div class="gallery-container">
-                {% for image in images_in_category %}
-                    <div class="image-item">
-
-                        <a href="{% url 'image_detail' image.id %}?nav=category"><img class="{{image.category}}" src="{{ image.image.url }}" alt="{{ image.title }}"></a>
+    <div class="container space">
+        <div class="gallery-header" data-aos="fade-up">
+            <h1 class="gallery-title">Art Gallery</h1>
+            <p class="gallery-description">Browse through a collection of wedding and event paintings that capture special moments in beautiful detail. Each piece tells a unique story and preserves memories that last a lifetime.</p>
+        </div>
+        
+        <!-- Category Navigation -->
+        <div class="category-nav" data-aos="fade-up" data-aos-delay="100">
+            <button class="category-button active" data-category="all">All Paintings</button>
+            {% for category in images.keys %}
+                <button class="category-button" data-category="{{ category }}">{{ category|title }}</button>
+            {% endfor %}
+        </div>
+        
+        <div class="gallery-container" data-aos="fade-up" data-aos-delay="200">
+            <!-- All Images View (visible by default) -->
+            <!-- All Images View (visible by default) -->
+<div class="category-section" id="all-category">
+    <div class="image-grid">
+        {% for image in list_images %}
+            <div class="image-card">
+                <a href="{% url 'image_detail' image.id %}?nav=all" class="image-link">
+                    <div class="image-wrapper">
+                        <img src="{{ image.image.url }}" alt="{{ image.title|default:image.image_description }}">
+                        <div class="image-overlay">
+                            <h3 class="image-title">{{ image.title|default:image.image_description|truncatechars:30 }}</h3>
+                            <p class="image-category">{{ image.category }}</p>
+                        </div>
+                        <div class="zoom-icon">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
                     </div>
-
-                <!-- End of Image as a Link -->
-                {% endfor %}
+                </a>
+            </div>
+        {% empty %}
+            <div class="empty-category">
+                <i class="fas fa-paint-brush"></i>
+                <h3>No paintings available yet</h3>
+                <p>Please check back soon for new artwork</p>
             </div>
         {% endfor %}
     </div>
+</div>
+            
+            <!-- Category-specific Views (hidden by default) -->
+            {% for category, images_in_category in images.items %}
+                <div class="category-section" id="{{ category }}-category" style="display: none;">
+                    <h2 class="category-title">{{ category }} Paintings</h2>
+                    <div class="image-grid category-{{ category }}">
+                        {% for image in images_in_category %}
+                            <div class="image-card">
+                                <a href="{% url 'image_detail' image.id %}?nav=category" class="image-link">
+                                    <div class="image-wrapper">
+                                        <img src="{{ image.image.url }}" alt="{{ image.title|default:image.image_description }}">
+                                        <div class="image-overlay">
+                                            <h3 class="image-title">{{ image.title|default:image.image_description|truncatechars:30 }}</h3>
+                                            <p class="image-category">{{ category }}</p>
+                                        </div>
+                                        <div class="zoom-icon">
+                                            <i class="fas fa-search-plus"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        {% empty %}
+                            <div class="empty-category">
+                                <i class="fas fa-paint-brush"></i>
+                                <h3>No {{ category }} paintings available yet</h3>
+                                <p>Please check back soon for new artwork in this category</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+            
+            <!-- Optional: Load More button -->
+            {% if list_images.count > 12 %}
+            <div class="load-more-container" data-aos="fade-up">
+                <button class="btn btn-outline-primary" id="loadMoreBtn">
+                    Load More <i class="fas fa-arrow-down ms-2"></i>
+                </button>
+            </div>
+            {% endif %}
+        </div>
+    </div>
 </section>
 
-
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Category filtering
+    const categoryButtons = document.querySelectorAll('.category-button');
+    const categorySections = document.querySelectorAll('.category-section');
+    const allCategorySection = document.getElementById('all-category');
+    
+    // Initial setup - show only all category
+    categorySections.forEach(section => {
+        if (section !== allCategorySection) {
+            section.style.display = 'none';
+        }
+    });
+    
+    // Handle category button clicks
+    categoryButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Update active button
+            categoryButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            const category = this.getAttribute('data-category');
+            
+            // Show/hide appropriate sections
+            if (category === 'all') {
+                allCategorySection.style.display = 'block';
+                
+                categorySections.forEach(section => {
+                    if (section !== allCategorySection) {
+                        section.style.display = 'none';
+                    }
+                });
+            } else {
+                allCategorySection.style.display = 'none';
+                
+                categorySections.forEach(section => {
+                    if (section.id === `${category}-category`) {
+                        section.style.display = 'block';
+                    } else {
+                        section.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Reset load more functionality
+            resetLoadMore();
+        });
+    });
+    
+    // Load more functionality
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    const imagesPerLoad = 12; // Number of images to show initially and each load
+    
+    function resetLoadMore() {
+        if (!loadMoreBtn) return;
+        
+        // Find all visible images in the currently active category
+        const activeCategory = document.querySelector('.category-button.active').getAttribute('data-category');
+        let visibleSection;
+        
+        if (activeCategory === 'all') {
+            visibleSection = allCategorySection;
+        } else {
+            visibleSection = document.getElementById(`${activeCategory}-category`);
+        }
+        
+        // Get all images in the visible section
+        const allImages = visibleSection.querySelectorAll('.image-card');
+        
+        // Initially hide images beyond the initial count
+        allImages.forEach((image, index) => {
+            if (index < imagesPerLoad) {
+                image.style.display = 'block';
+            } else {
+                image.style.display = 'none';
+            }
+        });
+        
+        // Show/hide load more button
+        if (allImages.length > imagesPerLoad) {
+            loadMoreBtn.style.display = 'inline-block';
+        } else {
+            loadMoreBtn.style.display = 'none';
+        }
+    }
+    
+    if (loadMoreBtn) {
+        // Initial setup
+        resetLoadMore();
+        
+        loadMoreBtn.addEventListener('click', function() {
+            // Find all visible images in the currently active category
+            const activeCategory = document.querySelector('.category-button.active').getAttribute('data-category');
+            let visibleSection;
+            
+            if (activeCategory === 'all') {
+                visibleSection = allCategorySection;
+            } else {
+                visibleSection = document.getElementById(`${activeCategory}-category`);
+            }
+            
+            // Get all images in the visible section
+            const allImages = visibleSection.querySelectorAll('.image-card');
+            
+            // Count currently visible images
+            let visibleCount = 0;
+            allImages.forEach(image => {
+                if (image.style.display !== 'none') {
+                    visibleCount++;
+                }
+            });
+            
+            // Show more images
+            let newlyVisible = 0;
+            allImages.forEach((image, index) => {
+                if (index >= visibleCount && index < visibleCount + imagesPerLoad) {
+                    image.style.display = 'block';
+                    newlyVisible++;
+                    
+                    // Add a small delay for a staggered animation effect
+                    setTimeout(() => {
+                        image.style.opacity = '1';
+                        image.style.transform = 'translateY(0)';
+                    }, newlyVisible * 50);
+                }
+            });
+            
+            // Hide button if all images are now visible
+            if (visibleCount + newlyVisible >= allImages.length) {
+                loadMoreBtn.style.display = 'none';
+            }
+        });
+    }
+    
+    // Optional: Add lazy loading for images
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target.querySelector('img');
+                    const src = img.getAttribute('data-src');
+                    if (src) {
+                        img.src = src;
+                        img.removeAttribute('data-src');
+                    }
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+        
+        document.querySelectorAll('.image-wrapper').forEach(wrapper => {
+            imageObserver.observe(wrapper);
+        });
+    }
+});
+</script>
 {% endblock %}
